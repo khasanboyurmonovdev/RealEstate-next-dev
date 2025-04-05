@@ -57,9 +57,7 @@ const withLayoutMain = (Component: any) => {
 						<meta name={'title'} content={`Nestar`} />
 					</Head>
 					<Stack id="pc-wrap">
-						<Stack id={'top'}>
-							<Top />
-						</Stack>
+						<Stack id={'top'}>{/* <Top /> */}</Stack>
 
 						<Stack className={'header-main'}>
 							<FiberContainer />
