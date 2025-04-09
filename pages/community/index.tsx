@@ -113,7 +113,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 								<Stack className={'image-info'}>
 									<img src={'/img/logo/logoText.svg'} />
 									<Stack className={'community-name'}>
-										<Typography className={'name'}>Nestar Community</Typography>
+										<Typography className={'name'}>PropNation Community</Typography>
 									</Stack>
 								</Stack>
 
@@ -151,10 +151,8 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 								<Stack className="panel-config">
 									<Stack className="title-box">
 										<Stack className="left">
-											<Typography className="title">{searchCommunity.search.articleCategory} BOARD</Typography>
-											<Typography className="sub-title">
-												Express your opinions freely here without content restrictions
-											</Typography>
+											<Typography className="title">{searchCommunity.search.articleCategory} Public Board</Typography>
+											<Typography className="sub-title">Your Voice Matters — Share Freely, Speak Openly</Typography>
 										</Stack>
 										<Button
 											onClick={() =>
@@ -167,7 +165,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 											}
 											className="right"
 										>
-											Write
+											Add Your Voice
 										</Button>
 									</Stack>
 

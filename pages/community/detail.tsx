@@ -276,10 +276,8 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 						<div className="community-detail-config">
 							<Stack className="title-box">
 								<Stack className="left">
-									<Typography className="title">{articleCategory} BOARD</Typography>
-									<Typography className="sub-title">
-										Express your opinions freely here without content restrictions
-									</Typography>
+									<Typography className="title">{articleCategory}Public Board </Typography>
+									<Typography className="sub-title">Your Voice Matters — Share Freely, Speak Openly</Typography>
 								</Stack>
 								<Button
 									onClick={() =>
@@ -292,7 +290,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 									}
 									className="right"
 								>
-									Write
+									Add Your Voice
 								</Button>
 							</Stack>
 							<div className="config">
