@@ -24,23 +24,22 @@ const TopAgents = (props: TopAgentsProps) => {
 
 	/** APOLLO REQUESTS **/
 	const {
-			loading: getAgentsLoading,
-			data: getAgentsData,
-			error: getAgentsError,
-			refetch: getAgentsRefetch,
-		} = useQuery(GET_AGENTS, {
-			fetchPolicy: "cache-and-network",
-			variables: {input: initialInput},
-			notifyOnNetworkStatusChange: true,
-			onCompleted: (data: T) => {
-				if (data?.getAgents?.list) {
-					setTopAgents(data.getAgents.list);
-				} else {
-					console.error("No Agents data:", data);
-				}
+		loading: getAgentsLoading,
+		data: getAgentsData,
+		error: getAgentsError,
+		refetch: getAgentsRefetch,
+	} = useQuery(GET_AGENTS, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: initialInput },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			if (data?.getAgents?.list) {
+				setTopAgents(data.getAgents.list);
+			} else {
+				console.error('No Agents data:', data);
 			}
-			
-		});
+		},
+	});
 	/** HANDLERS **/
 
 	if (device === 'mobile') {
@@ -79,7 +78,7 @@ const TopAgents = (props: TopAgentsProps) => {
 							<span>Top Agents</span>
 							<p>Our Top Agents always ready to serve you</p>
 						</Box>
-						<Box component={'div'} className={'right'}>
+						<Box component={'div'} className={'right'} onClick={() => router.push('/agent')} sx={{ cursor: 'pointer' }}>
 							<div className={'more-box'}>
 								<span>See All Agents</span>
 								<img src="/img/icons/rightup.svg" alt="" />

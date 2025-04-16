@@ -75,7 +75,7 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 				<Stack className="main-title-box">
 					<Stack className="right-box">
 						<Typography className="main-title">Article</Typography>
-						<Typography className="sub-title">We are glad to see you again!</Typography>
+						<Typography className="sub-title">Insights, stories, and tips to inspire your next move.</Typography>
 					</Stack>
 				</Stack>
 				<Stack className="article-list-box">

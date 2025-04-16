@@ -22,7 +22,7 @@ const Article = () => {
 							<Typography>Equestrian Family Home</Typography>
 						</Stack>
 						<Stack className="address">
-							<Typography>Shillymdong, Kwanak-ku, Seoul </Typography>
+							<Typography> Downtown, Manhattan, New York City, NY</Typography>
 						</Stack>
 					</Stack>
 				</Stack>

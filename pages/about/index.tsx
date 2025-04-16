@@ -52,7 +52,7 @@ const About: NextPage = () => {
 				<Stack className={'statistics'}>
 					<Stack className={'container'}>
 						<Stack className={'banner'}>
-							<img src="/img/banner/Header1.jpg" alt="" />
+							<img src="/img/banner/Header3.jpg" alt="" />
 						</Stack>
 						<Stack className={'info'}>
 							<Box component={'div'}>

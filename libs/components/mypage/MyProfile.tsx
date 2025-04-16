@@ -118,7 +118,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 				<Stack className="main-title-box">
 					<Stack className="right-box">
 						<Typography className="main-title">My Profile</Typography>
-						<Typography className="sub-title">We are glad to see you again!</Typography>
+						<Typography className="sub-title">Everything about you, in one place</Typography>
 					</Stack>
 				</Stack>
 				<Stack className="top-box">

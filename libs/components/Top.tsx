@@ -146,16 +146,25 @@ const Top = () => {
 					<div>{t('Home')}</div>
 				</Link>
 				<Link href={'/property'}>
-					<div>{t('Properties')}</div>
+					<div>{t('Listings')}</div>
 				</Link>
 				<Link href={'/agent'}>
-					<div> {t('Agents')} </div>
+					<div> {t('Find an Agent')} </div>
 				</Link>
 				<Link href={'/community?articleCategory=FREE'}>
 					<div> {t('Community')} </div>
 				</Link>
+				<Link href={'/about'}>
+					<div>{t('About Us')}</div>
+				</Link>
+				{user?._id && (
+					<Link href={'/mypage'}>
+						<div> {t('My Page')} </div>
+					</Link>
+				)}
+
 				<Link href={'/cs'}>
-					<div> {t('CS')} </div>
+					<div> {t('Help')} </div>
 				</Link>
 			</Stack>
 		);
@@ -166,7 +175,7 @@ const Top = () => {
 					<Stack className={'container'}>
 						<Box component={'div'} className={'logo-box'}>
 							<Link href={'/'}>
-								<img src="/img/logo/logoWhite.svg" alt="" />
+								<img src="/img/logo/propnation.svg" alt="" />
 							</Link>
 						</Box>
 						<Box component={'div'} className={'router-box'}>
@@ -177,13 +186,13 @@ const Top = () => {
 								<div>{t('Properties')}</div>
 							</Link>
 							<Link href={'/agent'}>
-								<div> {t('Agents')} </div>
+								<div> {t('Find an Agent')} </div>
 							</Link>
 							<Link href={'/community?articleCategory=FREE'}>
 								<div> {t('Community')} </div>
 							</Link>
 							<Link href={'/about'}>
-								<div>{t('About')}</div>
+								<div>{t('About Us')}</div>
 							</Link>
 							{user?._id && (
 								<Link href={'/mypage'}>
@@ -191,7 +200,7 @@ const Top = () => {
 								</Link>
 							)}
 							<Link href={'/cs'}>
-								<div> {t('CS')} </div>
+								<div> {t('Cs')} </div>
 							</Link>
 						</Box>
 						<Box component={'div'} className={'user-box'}>

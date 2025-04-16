@@ -15,7 +15,7 @@ const Footer = () => {
 				<Stack className={'main'}>
 					<Stack className={'left'}>
 						<Box component={'div'} className={'footer-box'}>
-							<img src="/img/logo/logoWhite.svg" alt="" className={'logo'} />
+							<img src="/img/logo/propnation.svg" alt="" className={'logo'} />
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
 							<span>We're Here to Help</span>
@@ -39,31 +39,31 @@ const Footer = () => {
 					<Stack className={'right'}>
 						<Box component={'div'} className={'bottom'}>
 							<div>
-								<strong>Popular Search</strong>
+								<strong>Popular Searches</strong>
 								<span>Property for Rent</span>
-								<span>Property Low to hide</span>
+								<span>Affordable Properties</span>
 							</div>
 							<div>
 								<strong>Quick Links</strong>
 								<span>Terms of Use</span>
 								<span>Privacy Policy</span>
 								<span>Pricing Plans</span>
-								<span>Our Services</span>
-								<span>Contact Support</span>
+								<span>What We Offer</span>
+								<span>Get Help</span>
 								<span>FAQs</span>
 							</div>
 							<div>
 								<strong>Discover</strong>
-								<span>Seoul</span>
-								<span>Gyeongido</span>
-								<span>Busan</span>
-								<span>Jejudo</span>
+								<span>New York</span>
+								<span>California</span>
+								<span>Chicago</span>
+								<span>Pensylvania</span>
 							</div>
 						</Box>
 					</Stack>
 				</Stack>
 				<Stack className={'second'}>
-					<span>© Nestar - All rights reserved. Nestar {moment().year()}</span>
+					<span>© PropNation - All rights reserved. PropNation {moment().year()}</span>
 				</Stack>
 			</Stack>
 		);
@@ -73,19 +73,19 @@ const Footer = () => {
 				<Stack className={'main'}>
 					<Stack className={'left'}>
 						<Box component={'div'} className={'footer-box'}>
-							<img src="/img/logo/logoWhite.svg" alt="" className={'logo'} />
+							<img src="/img/logo/propnation2.png" alt="" className={'logo'} />
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
-							<span>total free customer care</span>
-							<p>+82 10 4867 2909</p>
+							<span>We're Here to Help</span>
+							<p>support@propnationgmail.com</p>
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
-							<span>nee live</span>
-							<p>+82 10 4867 2909</p>
-							<span>Support?</span>
+							<span>Support Center</span>
+							<p>+82 10 7375 1408</p>
+							<span>Get Support</span>
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
-							<p>follow us on social media</p>
+							<p>Join Us Online</p>
 							<div className={'media-box'}>
 								<FacebookOutlinedIcon />
 								<TelegramIcon />
@@ -96,7 +96,7 @@ const Footer = () => {
 					</Stack>
 					<Stack className={'right'}>
 						<Box component={'div'} className={'top'}>
-							<strong>keep yourself up to date</strong>
+							<strong>Get the Latest News</strong>
 							<div>
 								<input type="text" placeholder={'Your Email'} />
 								<span>Subscribe</span>
@@ -104,31 +104,31 @@ const Footer = () => {
 						</Box>
 						<Box component={'div'} className={'bottom'}>
 							<div>
-								<strong>Popular Search</strong>
+								<strong>Popular Searches</strong>
 								<span>Property for Rent</span>
-								<span>Property Low to hide</span>
+								<span>Affordable Properties</span>
 							</div>
 							<div>
 								<strong>Quick Links</strong>
 								<span>Terms of Use</span>
 								<span>Privacy Policy</span>
 								<span>Pricing Plans</span>
-								<span>Our Services</span>
-								<span>Contact Support</span>
+								<span>What We Offer</span>
+								<span>Get Help</span>
 								<span>FAQs</span>
 							</div>
 							<div>
 								<strong>Discover</strong>
-								<span>Seoul</span>
-								<span>Gyeongido</span>
-								<span>Busan</span>
-								<span>Jejudo</span>
+								<span>New York</span>
+								<span>California</span>
+								<span>Chicago</span>
+								<span>Pensylvania</span>
 							</div>
 						</Box>
 					</Stack>
 				</Stack>
 				<Stack className={'second'}>
-					<span>© Nestar - All rights reserved. Nestar {moment().year()}</span>
+					<span>© PropNation - All rights reserved. PropNation {moment().year()}</span>
 					<span>Privacy · Terms · Sitemap</span>
 				</Stack>
 			</Stack>

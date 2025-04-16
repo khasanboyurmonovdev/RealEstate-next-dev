@@ -351,7 +351,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						{propertyLocation.map((location: string) => {
 							return (
 								<div onClick={() => propertyLocationSelectHandler(location)} key={location}>
-									<img src={`img/banner/cities/${location}.webp`} alt="" />
+									<img src={`img/banner/cities/${location}.jpg`} alt="" />
 									<span>{location}</span>
 								</div>
 							);
@@ -362,7 +362,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						{propertyType.map((type: string) => {
 							return (
 								<div
-									style={{ backgroundImage: `url(/img/banner/types/${type.toLowerCase()}.webp)` }}
+									style={{ backgroundImage: `url(/img/banner/types/${type.toLowerCase()}.jpg)` }}
 									onClick={() => propertyTypeSelectHandler(type)}
 									key={type}
 								>
@@ -417,7 +417,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							<div className={'middle'}>
 								<div className={'row-box'}>
 									<div className={'box'}>
-										<span>bedrooms</span>
+										<span>Bedrooms</span>
 										<div className={'inside'}>
 											<div
 												className={`room ${!searchFilter?.search?.bedsList ? 'active' : ''}`}
@@ -437,7 +437,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 										</div>
 									</div>
 									<div className={'box'}>
-										<span>options</span>
+										<span>Options</span>
 										<div className={'inside'}>
 											<FormControl>
 												<Select
@@ -495,7 +495,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 										</div>
 									</div>
 									<div className={'box'}>
-										<span>square meter</span>
+										<span>Square Meter</span>
 										<div className={'inside space-between align-center'}>
 											<FormControl sx={{ width: '122px' }}>
 												<Select

@@ -10,30 +10,32 @@ interface EventData {
 }
 const eventsData: EventData[] = [
 	{
-		eventTitle: 'Paradise City Theme Park',
-		city: 'Incheon',
+		eventTitle: 'Macys Thanksgiving Day Parade',
+		city: 'NEWYORK',
 		description:
-			'Experience magic and wonder in Incheon with a visit to the night-themed indoor theme park Wonderbox at Paradise City!',
-		imageSrc: '/img/events/INCHEON.webp',
+			'Celebrate one of Americas most iconic parades with giant balloons, floats, and performances in the heart of NYC!',
+		imageSrc: '/img/events/newyork.jpg',
 	},
 	{
-		eventTitle: 'Taebaeksan Snow Festival',
-		city: 'Seoul',
-		description: 'If you have the opportunity to travel to South Korea, do not miss the Taebaeksan Snow Festival!',
-		imageSrc: '/img/events/SEOUL.webp',
-	},
-	{
-		eventTitle: 'Suseong Lake Event',
-		city: 'Daegu',
-		description: 'The Suseong Lake Festival is a culture and arts festival held alongside Suseongmot Lake!',
-		imageSrc: '/img/events/DAEGU.webp',
-	},
-	{
-		eventTitle: 'Sand Festival',
-		city: 'Busan',
+		eventTitle: 'Chicago Air and Water Show',
+		city: 'Chicago',
 		description:
-			'Haeundae Sand Festival, the nation’s largest eco-friendly exhibition on sand, is held at Haeundae Beach!',
-		imageSrc: '/img/events/BUSAN.webp',
+			'Watch thrilling aerial acrobatics and water stunts on the Lake Michigan shoreline in this spectacular Chicago tradition!',
+		imageSrc: '/img/events/chicago.jpg',
+	},
+	{
+		eventTitle: 'Mardi Gras Celebration',
+		city: 'New Orleans',
+		description:
+			'Experience the electric energy of Mardi Gras in New Orleans with vibrant parades, music, and colorful beads!',
+		imageSrc: '/img/events/NEWORLEANS.jpg',
+	},
+	{
+		eventTitle: 'Seattle Seafair',
+		city: 'Seattle',
+		description:
+			'Celebrate summer in Seattle with hydroplane races, air shows, and city-wide festivities during Seafair!',
+		imageSrc: '/img/events/seattle.jpg',
 	},
 ];
 
@@ -77,7 +79,7 @@ const Events = () => {
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
 							<span className={'white'}>Events</span>
-							<p className={'white'}>Events waiting your attention!</p>
+							<p className={'white'}>Stay connected. Discover upcoming events near you.</p>
 						</Box>
 					</Stack>
 					<Stack className={'card-wrapper'}>

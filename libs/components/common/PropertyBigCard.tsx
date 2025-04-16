@@ -67,7 +67,7 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 					<div className={'bott'}>
 						<div>
 							{property?.propertyRent ? <p>Rent</p> : <span>Rent</span>}
-							{property?.propertyBarter ? <p>Barter</p> : <span>Barter</span>}
+							{property?.propertyBarter ? <p>House Exchange</p> : <span>House Exchange</span>}
 						</div>
 						<div className="buttons-box">
 							<IconButton color={'default'}>

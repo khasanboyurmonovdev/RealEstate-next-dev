@@ -38,14 +38,14 @@ const RecentlyVisited: NextPage = () => {
 	};
 
 	if (device === 'mobile') {
-		return <div>NESTAR MY FAVORITES MOBILE</div>;
+		return <div>PropNation MY FAVORITES MOBILE</div>;
 	} else {
 		return (
 			<div id="my-favorites-page">
 				<Stack className="main-title-box">
 					<Stack className="right-box">
 						<Typography className="main-title">Recently Visited</Typography>
-						<Typography className="sub-title">We are glad to see you again!</Typography>
+						<Typography className="sub-title">Retrace your steps. Find what sparked your interest.</Typography>
 					</Stack>
 				</Stack>
 				<Stack className="favorites-list-box">

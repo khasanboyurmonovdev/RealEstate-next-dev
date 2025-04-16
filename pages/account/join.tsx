@@ -71,19 +71,19 @@ const Join: NextPage = () => {
 						<Stack className={'left'}>
 							{/* @ts-ignore */}
 							<Box className={'logo'}>
-								<img src="/img/logo/logoText.svg" alt="" />
-								<span>Nestar</span>
+								<img src="/img/logo/propnation2.svg" alt="" />
+								<span>PropNation</span>
 							</Box>
 							<Box className={'info'}>
 								<span>{loginView ? 'login' : 'signup'}</span>
-								<p>{loginView ? 'Login' : 'Sign'} in with this account across the following sites.</p>
+								<p>{loginView ? 'Login' : 'Sign'} in and sync your journey across all sites.</p>
 							</Box>
 							<Box className={'input-wrap'}>
 								<div className={'input-box'}>
-									<span>Nickname</span>
+									<span>Username</span>
 									<input
 										type="text"
-										placeholder={'Enter Nickname'}
+										placeholder={'Enter Username'}
 										onChange={(e) => handleInput('nick', e.target.value)}
 										required={true}
 										onKeyDown={(event) => {

@@ -64,7 +64,11 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 		setCurrentPage(searchFilter.page === undefined ? 1 : searchFilter.page);
 	}, [router]);
 
-	useEffect(() => {}, [searchFilter]);
+	useEffect(() => {
+		if (searchFilter) {
+			getPropertiesRefetch({ input: searchFilter });
+		}
+	}, [searchFilter]);
 
 	/** HANDLERS **/
 	const likePropertyHandler = async (user: T, id: string) => {
@@ -217,7 +221,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 PropertyList.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 8,
+		limit: 9,
 		sort: 'createdAt',
 		direction: 'DESC',
 		search: {

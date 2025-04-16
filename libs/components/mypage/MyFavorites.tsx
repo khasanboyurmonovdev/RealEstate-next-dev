@@ -64,7 +64,7 @@ const MyFavorites: NextPage = () => {
 				<Stack className="main-title-box">
 					<Stack className="right-box">
 						<Typography className="main-title">My Favorites</Typography>
-						<Typography className="sub-title">We are glad to see you again!</Typography>
+						<Typography className="sub-title">Homes you love, saved for later.</Typography>
 					</Stack>
 				</Stack>
 				<Stack className="favorites-list-box">
