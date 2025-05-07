@@ -1,16 +1,18 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Avatar, Box, Stack } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import Badge from '@mui/material/Badge';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread';
 import { useRouter } from 'next/router';
 import ScrollableFeed from 'react-scrollable-feed';
 import { RippleBadge } from '../../scss/MaterialTheme/styled';
 import { useReactiveVar } from '@apollo/client';
-import { socketVar, userVar } from '../../apollo/store';
+import { notificationsVar, socketVar, userVar } from '../../apollo/store';
 import { Member } from '../types/member/member';
 import { Messages, REACT_APP_API_URL } from '../config';
 import { sweetErrorAlert } from '../sweetAlert';
+import { Notifications } from '../types/notification/notification';
 
 const NewMessage = (type: any) => {
 	if (type === 'right') {
@@ -60,30 +62,38 @@ const Chat = () => {
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const socket = useReactiveVar(socketVar);
+	const notifications = useReactiveVar(notificationsVar);
 
 	/** LIFECYCLES **/
 
 	useEffect(() => {
 		socket.onmessage = (msg) => {
 			const data = JSON.parse(msg.data);
-			console.log('websocket message', data);
+			console.log('websocket message:', data);
 			switch (data.event) {
 				case 'info':
 					const newInfo: InfoPayload = data;
 					setOnlineUsers(newInfo.totalClients);
 					break;
-				case 'history':
+				case 'getMessages':
 					const list: MessagePayload[] = data.list;
 					setMessagesList(list);
+					console.log('getMessages event');
 					break;
 				case 'message':
 					const newMessage: MessagePayload = data;
 					messagesList.push(newMessage);
 					setMessagesList([...messagesList]);
 					break;
+				case 'notifications':
+					notificationsVar(data.notifications);
+					break;
+				default:
+					break;
 			}
 		};
-	}, [socket, messagesList]);
+		console.log('Chat is rendered!');
+	}, [socket, messagesList, onlineUsers]);
 
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
@@ -145,7 +155,7 @@ const Chat = () => {
 							<Box flexDirection={'row'} style={{ display: 'flex' }} sx={{ m: '10px 0px' }} component={'div'}>
 								<div className={'welcome'}>Welcome to Live chat!</div>
 							</Box>
-							{messagesList.map((ele: MessagePayload, index: number) => {
+							{messagesList.map((ele: MessagePayload) => {
 								const { text, memberData } = ele;
 								const memberImage = memberData?.memberImage
 									? `${REACT_APP_API_URL}/${memberData.memberImage}`
@@ -154,7 +164,6 @@ const Chat = () => {
 								return memberData?._id === user?._id ? (
 									<Box
 										component={'div'}
-										key={`${text}-${index}`}
 										flexDirection={'row'}
 										style={{ display: 'flex' }}
 										alignItems={'flex-end'}
@@ -164,13 +173,7 @@ const Chat = () => {
 										<div className={'msg-right'}>{text}</div>
 									</Box>
 								) : (
-									<Box
-										key={`${text}-${index}`}
-										flexDirection={'row'}
-										style={{ display: 'flex' }}
-										sx={{ m: '10px 0px' }}
-										component={'div'}
-									>
+									<Box flexDirection={'row'} style={{ display: 'flex' }} sx={{ m: '10px 0px' }} component={'div'}>
 										<Avatar alt={'jonik'} src={memberImage} />
 										<div className={'msg-left'}>{text}</div>
 									</Box>
@@ -191,7 +194,7 @@ const Chat = () => {
 						onKeyDown={getKeyHandler}
 					/>
 					<button className={'send-msg-btn'} onClick={onClickHandler}>
-						<SendIcon style={{ color: '#fff' }} />
+						<SendIcon style={{ color: '#1c9ee3' }} />
 					</button>
 				</Box>
 			</Stack>
