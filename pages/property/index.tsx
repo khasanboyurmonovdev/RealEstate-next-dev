@@ -1,15 +1,19 @@
-import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+// Phase 4 Task 7 — Filter Bar Redesign
+// Phase 4 Task 8
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { NextPage } from 'next';
-import { Box, Button, Menu, MenuItem, Pagination, Stack, Typography } from '@mui/material';
+import { Drawer, Pagination, Stack, Typography } from '@mui/material';
 import PropertyCard from '../../libs/components/property/PropertyCard';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import Filter from '../../libs/components/property/Filter';
+import FilterBar from '../../libs/components/property/FilterBar';
 import { useRouter } from 'next/router';
 import { PropertiesInquiry } from '../../libs/types/property/property.input';
 import { Property } from '../../libs/types/property/property';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import { useTranslation } from 'next-i18next';
+import FilterListIcon from '@mui/icons-material/FilterList';
 import { Direction, Message } from '../../libs/enums/common.enum';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_PROPERTIES } from '../../apollo/user/query';
@@ -26,15 +30,15 @@ export const getStaticProps = async ({ locale }: any) => ({
 const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const { t } = useTranslation('common');
 	const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>(
 		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
 	);
 	const [properties, setProperties] = useState<Property[]>([]);
 	const [total, setTotal] = useState<number>(0);
 	const [currentPage, setCurrentPage] = useState<number>(1);
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	const [sortingOpen, setSortingOpen] = useState(false);
-	const [filterSortName, setFilterSortName] = useState('New');
+	const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
+	const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
@@ -60,7 +64,6 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 			const inputObj = JSON.parse(router?.query?.input as string);
 			setSearchFilter(inputObj);
 		}
-
 		setCurrentPage(searchFilter.page === undefined ? 1 : searchFilter.page);
 	}, [router]);
 
@@ -75,13 +78,8 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 		try {
 			if (!id) return;
 			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
-
-			// executed likeTargetProperty Mutation
-			await likeTargetProperty({
-				variables: { input: id },
-			});
+			await likeTargetProperty({ variables: { input: id } });
 			await getPropertiesRefetch({ input: initialInput });
-
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
 			console.log('ERROR, likePropertyHandler:', err.message);
@@ -94,128 +92,154 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 		await router.push(
 			`/property?input=${JSON.stringify(searchFilter)}`,
 			`/property?input=${JSON.stringify(searchFilter)}`,
-			{
-				scroll: false,
-			},
+			{ scroll: false },
 		);
 		setCurrentPage(value);
 	};
 
-	const sortingClickHandler = (e: MouseEvent<HTMLElement>) => {
-		setAnchorEl(e.currentTarget);
-		setSortingOpen(true);
-	};
+	const activeFilterCount =
+		(searchFilter?.search?.locationList?.length ?? 0) +
+		(searchFilter?.search?.typeList?.length ?? 0) +
+		(searchFilter?.search?.roomsList?.length ?? 0);
 
-	const sortingCloseHandler = () => {
-		setSortingOpen(false);
-		setAnchorEl(null);
-	};
-
-	const sortingHandler = (e: React.MouseEvent<HTMLLIElement>) => {
-		switch (e.currentTarget.id) {
-			case 'new':
-				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: Direction.ASC });
-				setFilterSortName('New');
-				break;
-			case 'lowest':
-				setSearchFilter({ ...searchFilter, sort: 'propertyPrice', direction: Direction.ASC });
-				setFilterSortName('Lowest Price');
-				break;
-			case 'highest':
-				setSearchFilter({ ...searchFilter, sort: 'propertyPrice', direction: Direction.DESC });
-				setFilterSortName('Highest Price');
-		}
-		setSortingOpen(false);
-		setAnchorEl(null);
-	};
-
+	// ── Mobile render ─────────────────────────────────────────────────────────
 	if (device === 'mobile') {
-		return <h1>PROPERTIES MOBILE</h1>;
-	} else {
 		return (
-			<div id="property-list-page" style={{ position: 'relative' }}>
-				<div className="container">
-					<Box component={'div'} className={'right'}>
-						<span>Sort by</span>
-						<div>
-							<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
-								{filterSortName}
-							</Button>
-							<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'new'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									New
-								</MenuItem>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'lowest'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									Lowest Price
-								</MenuItem>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'highest'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									Highest Price
-								</MenuItem>
-							</Menu>
-						</div>
-					</Box>
-					<Stack className={'property-page'}>
-						<Stack className={'filter-config'}>
-							{/* @ts-ignore */}
-							<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
-						</Stack>
-						<Stack className="main-config" mb={'76px'}>
-							<Stack className={'list-config'}>
-								{properties?.length === 0 ? (
-									<div className={'no-data'}>
-										<img src="/img/icons/icoAlert.svg" alt="" />
-										<p>No Properties found!</p>
-									</div>
-								) : (
-									properties.map((property: Property) => {
-										return (
-											<PropertyCard property={property} likePropertyHandler={likePropertyHandler} key={property?._id} />
-										);
-									})
-								)}
-							</Stack>
-							<Stack className="pagination-config">
-								{properties.length !== 0 && (
-									<Stack className="pagination-box">
-										<Pagination
-											page={currentPage}
-											count={Math.ceil(total / searchFilter.limit)}
-											onChange={handlePaginationChange}
-											shape="circular"
-											color="primary"
-										/>
-									</Stack>
-								)}
-
-								{properties.length !== 0 && (
-									<Stack className="total-result">
-										<Typography>
-											Total {total} propert{total > 1 ? 'ies' : 'y'} available
-										</Typography>
-									</Stack>
-								)}
-							</Stack>
-						</Stack>
+			<div id="property-list-page" className="property-list-mobile">
+				<div className="property-mobile-container">
+					<Stack className="property-mobile-list property-card-grid">
+						{getPropertiesLoading ? (
+							[1, 2, 3, 4].map((i) => <PropertyCard key={i} isLoading />)
+						) : properties?.length === 0 ? (
+							<div className="no-data">
+								<Image src="/img/icons/icoAlert.svg" alt="" width={80} height={80} unoptimized />
+								<p>{t('No results found')}</p>
+							</div>
+						) : (
+							properties.map((p: Property) => (
+								<PropertyCard property={p} likePropertyHandler={likePropertyHandler} key={p._id} />
+							))
+						)}
 					</Stack>
+
+					{properties.length > 0 && (
+						<Stack className="property-mobile-pagination">
+							<Pagination
+								page={currentPage}
+								count={Math.ceil(total / searchFilter.limit)}
+								onChange={handlePaginationChange}
+								shape="circular"
+								color="primary"
+								showFirstButton={false}
+								showLastButton={false}
+								siblingCount={1}
+							/>
+							<Typography className="property-mobile-total">
+								{total} {t('Properties')}
+							</Typography>
+						</Stack>
+					)}
 				</div>
+
+				{/* Floating "Filtrlar" button */}
+				<button
+					type="button"
+					className="property-mobile-filter-btn"
+					onClick={() => setFilterDrawerOpen(true)}
+					aria-label={t('Filtrlar')}
+				>
+					<FilterListIcon />
+					<span>{t('Filtrlar')}</span>
+					{activeFilterCount > 0 && <span className="filter-badge">{activeFilterCount}</span>}
+				</button>
+
+				{/* Mobile filter bottom sheet */}
+				<Drawer
+					anchor="bottom"
+					open={filterDrawerOpen}
+					onClose={() => setFilterDrawerOpen(false)}
+					PaperProps={{
+						className: 'property-filter-drawer',
+						sx: {
+							borderRadius: '28px 28px 0 0',
+							maxHeight: '92vh',
+							paddingTop: 2,
+						},
+					}}
+				>
+					<div className="filter-drawer-handle" />
+					<div className="filter-drawer-content">
+						<FilterBar
+							searchFilter={searchFilter}
+							setSearchFilter={setSearchFilter}
+							initialInput={initialInput}
+							total={total}
+							isMobile
+							onClose={() => setFilterDrawerOpen(false)}
+						/>
+					</div>
+				</Drawer>
 			</div>
 		);
 	}
+
+	// ── Desktop render ────────────────────────────────────────────────────────
+	return (
+		<div id="property-list-page">
+			{/* Sticky horizontal filter bar + results header */}
+			<FilterBar
+				searchFilter={searchFilter}
+				setSearchFilter={setSearchFilter}
+				initialInput={initialInput}
+				total={total}
+				viewMode={viewMode}
+				onViewChange={setViewMode}
+			/>
+
+			{/* Results grid */}
+			<div className="property-page-new">
+				<div className={`list-config property-card-grid${viewMode === 'list' ? ' list-view' : ''}`}>
+					{getPropertiesLoading ? (
+						[1, 2, 3, 4, 5, 6].map((i) => <PropertyCard key={i} isLoading />)
+					) : properties?.length === 0 ? (
+						<div className="no-data">
+							<Image src="/img/icons/icoAlert.svg" alt="" width={80} height={80} unoptimized />
+							<p>No Properties found!</p>
+						</div>
+					) : (
+						properties.map((property: Property) => (
+							<PropertyCard
+								property={property}
+								likePropertyHandler={likePropertyHandler}
+								key={property?._id}
+							/>
+						))
+					)}
+				</div>
+
+				<div className="pagination-config">
+					{properties.length !== 0 && (
+						<div className="pagination-box">
+							<Pagination
+								page={currentPage}
+								count={Math.ceil(total / searchFilter.limit)}
+								onChange={handlePaginationChange}
+								shape="circular"
+								color="primary"
+							/>
+						</div>
+					)}
+					{properties.length !== 0 && (
+						<div className="total-result">
+							<p>
+								Jami {total} ta ko'chmas mulk mavjud
+							</p>
+						</div>
+					)}
+				</div>
+			</div>
+		</div>
+	);
 };
 
 PropertyList.defaultProps = {
@@ -223,7 +247,7 @@ PropertyList.defaultProps = {
 		page: 1,
 		limit: 9,
 		sort: 'createdAt',
-		direction: 'DESC',
+		direction: Direction.DESC,
 		search: {
 			squaresRange: {
 				start: 0,

@@ -1,4 +1,6 @@
+// Phase 4 Task 8
 import React, { useState } from 'react';
+import Image from 'next/image';
 import type { NextPage } from 'next';
 import withAdminLayout from '../../../libs/components/layout/LayoutAdmin';
 import { Box, Button, InputAdornment, Stack } from '@mui/material';
@@ -90,7 +92,7 @@ const AdminNotice: NextPage = (props: any) => {
 										<>
 											{true && <CancelRoundedIcon onClick={() => {}} />}
 											<InputAdornment position="end" onClick={() => {}}>
-												<img src="/img/icons/search_icon.png" alt={'searchIcon'} />
+												<Image src="/img/icons/search_icon.png" alt="searchIcon" width={20} height={20} />
 											</InputAdornment>
 										</>
 									}

@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Stack, Typography } from '@mui/material';
@@ -53,9 +55,17 @@ const CommunityCard = (props: CommunityCardProps) => {
 				className="community-general-card-config"
 				onClick={(e: React.SyntheticEvent<Element, Event>) => chooseArticleHandler(e, boardArticle)}
 			>
-				<Stack className="image-box">
-					<img src={imagePath} alt="" className="card-img" />
-				</Stack>
+			<Stack className="image-box" style={{ position: 'relative', overflow: 'hidden' }}>
+				<Image
+					src={imagePath}
+					alt={boardArticle?.articleTitle ?? ''}
+					fill
+					sizes="(max-width: 640px) 100vw, 33vw"
+					className="card-img"
+					style={{ objectFit: 'cover' }}
+					onError={(e) => { e.currentTarget.src = '/images/placeholder-property.svg'; }}
+				/>
+			</Stack>
 				<Stack className="desc-box" sx={{ marginTop: '-20px' }}>
 					<Stack>
 						<Typography

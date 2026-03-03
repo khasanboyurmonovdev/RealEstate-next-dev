@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React, { useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Button, Stack, Typography } from '@mui/material';
@@ -125,16 +127,20 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 					<Stack className="photo-box">
 						<Typography className="title">Photo</Typography>
 						<Stack className="image-big-box">
-							<Stack className="image-box">
-								<img
-									src={
-										updateData?.memberImage
-											? `${REACT_APP_API_URL}/${updateData?.memberImage}`
-											: `/img/profile/defaultUser.svg`
-									}
-									alt=""
-								/>
-							</Stack>
+						<Stack className="image-box" style={{ position: 'relative', overflow: 'hidden' }}>
+							<Image
+								src={
+									updateData?.memberImage
+										? `${REACT_APP_API_URL}/${updateData?.memberImage}`
+										: '/img/profile/defaultUser.svg'
+								}
+								alt=""
+								fill
+								sizes="128px"
+								style={{ objectFit: 'cover' }}
+								unoptimized={!updateData?.memberImage}
+							/>
+						</Stack>
 							<Stack className="upload-big-box">
 								<input
 									type="file"
@@ -164,7 +170,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 							<Typography className="title">Phone</Typography>
 							<input
 								type="text"
-								placeholder="Your Phone"
+								placeholder="+998 XX XXX XX XX"
 								value={updateData.memberPhone}
 								onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberPhone: value })}
 							/>

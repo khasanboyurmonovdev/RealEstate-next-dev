@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import type { ComponentType } from 'react';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import MenuList from '../admin/AdminMenuList';
@@ -142,7 +144,7 @@ const withAdminLayout = (Component: ComponentType) => {
 					>
 						<Toolbar sx={{ flexDirection: 'column', alignItems: 'flexStart' }}>
 							<Stack className={'logo-box'}>
-								<img src={'/img/logo/propnation_logo.svg'} alt={'logo'} />
+								<Image src={'/img/logo/ijaraly_logo.svg'} alt={'logo'} width={130} height={40} unoptimized />
 							</Stack>
 
 							<Stack

@@ -10,31 +10,31 @@ interface EventData {
 }
 const eventsData: EventData[] = [
 	{
-		eventTitle: 'Macys Thanksgiving Day Parade',
-		city: 'NEWYORK',
+		eventTitle: 'Novruz Bayram',
+		city: 'Tashkent',
 		description:
-			'Celebrate one of Americas most iconic parades with giant balloons, floats, and performances in the heart of NYC!',
+			'Celebrate the spring equinox festival with traditional food, music, and festivities across Uzbekistan.',
 		imageSrc: '/img/events/newyork.jpg',
 	},
 	{
-		eventTitle: 'Chicago Air and Water Show',
-		city: 'Chicago',
+		eventTitle: 'Tashkent International Film Festival',
+		city: 'Tashkent',
 		description:
-			'Watch thrilling aerial acrobatics and water stunts on the Lake Michigan shoreline in this spectacular Chicago tradition!',
+			'Experience world cinema and local productions at the annual film festival in the heart of Tashkent.',
 		imageSrc: '/img/events/chicago.jpg',
 	},
 	{
-		eventTitle: 'Mardi Gras Celebration',
-		city: 'New Orleans',
+		eventTitle: 'Silk and Spices Festival',
+		city: 'Bukhara',
 		description:
-			'Experience the electric energy of Mardi Gras in New Orleans with vibrant parades, music, and colorful beads!',
+			'Discover the heritage of the Silk Road with traditional crafts, music, and cultural performances in historic Bukhara.',
 		imageSrc: '/img/events/NEWORLEANS.jpg',
 	},
 	{
-		eventTitle: 'Seattle Seafair',
-		city: 'Seattle',
+		eventTitle: 'Shahrisabz Culture Day',
+		city: 'Samarkand',
 		description:
-			'Celebrate summer in Seattle with hydroplane races, air shows, and city-wide festivities during Seafair!',
+			'Explore the birthplace of Amir Timur with cultural exhibitions, folk performances, and historical tours.',
 		imageSrc: '/img/events/seattle.jpg',
 	},
 ];

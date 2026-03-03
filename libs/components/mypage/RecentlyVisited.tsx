@@ -1,5 +1,7 @@
+// Phase 4 Task 8 — next/image migration
 import React, { useState } from 'react';
 import { NextPage } from 'next';
+import Image from 'next/image';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Pagination, Stack, Typography } from '@mui/material';
 import PropertyCard from '../property/PropertyCard';
@@ -38,7 +40,7 @@ const RecentlyVisited: NextPage = () => {
 	};
 
 	if (device === 'mobile') {
-		return <div>PropNation MY FAVORITES MOBILE</div>;
+		return <div>Ijaraly MY FAVORITES MOBILE</div>;
 	} else {
 		return (
 			<div id="my-favorites-page">
@@ -55,7 +57,7 @@ const RecentlyVisited: NextPage = () => {
 						})
 					) : (
 						<div className={'no-data'}>
-							<img src="/img/icons/icoAlert.svg" alt="" />
+							<Image src="/img/icons/icoAlert.svg" alt="" width={56} height={56} unoptimized />
 							<p>No Recently Visited Properties found!</p>
 						</div>
 					)}

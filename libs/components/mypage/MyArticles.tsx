@@ -1,5 +1,7 @@
+// Phase 4 Task 8 — next/image migration
 import React, { useState } from 'react';
 import { NextPage } from 'next';
+import Image from 'next/image';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Pagination, Stack, Typography } from '@mui/material';
 import CommunityCard from '../common/CommunityCard';
@@ -92,7 +94,7 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 						})
 					) : (
 						<div className={'no-data'}>
-							<img src="/img/icons/icoAlert.svg" alt="" />
+							<Image src="/img/icons/icoAlert.svg" alt="" width={56} height={56} unoptimized />
 							<p>No Articles found!</p>
 						</div>
 					)}

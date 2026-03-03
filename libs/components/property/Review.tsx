@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React from 'react';
+import Image from 'next/image';
 import { Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Comment } from '../../types/comment/comment';
@@ -34,7 +36,15 @@ const Review = (props: ReviewProps) => {
 			<Stack className={'review-config'}>
 				<Stack className={'review-mb-info'}>
 					<Stack className={'img-name-box'}>
-						<img src={imagePath} alt="" className={'img-box'} />
+						<Image
+						src={imagePath}
+						alt=""
+						width={55}
+						height={55}
+						className={'img-box'}
+						style={{ objectFit: 'cover' }}
+						unoptimized={imagePath.endsWith('.svg')}
+					/>
 						<Stack>
 							<Typography className={'name'} onClick={() => goMemberPage(comment?.memberData?._id as string)}>
 								{comment.memberData?.memberNick}

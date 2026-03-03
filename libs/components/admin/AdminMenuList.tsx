@@ -60,6 +60,9 @@ const AdminMenuList = (props: any) => {
 			case 'board_create':
 				setClickSubMenu('Board Create');
 				break;
+			case 'verification':
+				setClickSubMenu('Verification');
+				break;
 			default:
 				setClickSubMenu('List');
 				break;
@@ -102,7 +105,10 @@ const AdminMenuList = (props: any) => {
 
 	const sub_menu_set: any = {
 		Users: [{ title: 'List', url: '/_admin/users' }],
-		Properties: [{ title: 'List', url: '/_admin/properties' }],
+		Properties: [
+			{ title: 'List', url: '/_admin/properties' },
+			{ title: 'Verification', url: '/_admin/properties/verification' },
+		],
 		Community: [{ title: 'List', url: '/_admin/community' }],
 		Cs: [
 			{ title: 'FAQ', url: '/_admin/cs/faq' },

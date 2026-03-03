@@ -1,4 +1,4 @@
-import { PropertyLocation, PropertyStatus, PropertyType } from '../../enums/property.enum';
+import { PropertyLocation, PropertyStatus, PropertyType, PropertyVerificationStatus } from '../../enums/property.enum';
 import { Direction } from '../../enums/common.enum';
 
 export interface PropertyInput {
@@ -54,6 +54,7 @@ export interface AgentPropertiesInquiry {
 interface ALPISearch {
 	propertyStatus?: PropertyStatus;
 	propertyLocationList?: PropertyLocation[];
+	verificationStatus?: PropertyVerificationStatus;
 }
 
 export interface AllPropertiesInquiry {

@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { NextPage } from 'next';
 import { Pagination, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
@@ -85,7 +87,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 	}
 
 	if (device === 'mobile') {
-		return <div>NESTAR PROPERTIES MOBILE</div>;
+		return <div>IJARALY PROPERTIES MOBILE</div>;
 	} else {
 		return (
 			<div id="my-property-page">
@@ -121,7 +123,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 
 						{agentProperties?.length === 0 ? (
 							<div className={'no-data'}>
-								<img src="/img/icons/icoAlert.svg" alt="" />
+								<Image src="/img/icons/icoAlert.svg" alt="" width={56} height={56} unoptimized />
 								<p>No Property found!</p>
 							</div>
 						) : (

@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Button, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
@@ -238,7 +240,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										</>
 									</select>
 									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
+									<Image src={'/img/icons/Vector.svg'} className={'arrow-down'} alt="" width={15} height={9} unoptimized />
 								</Stack>
 							</Stack>
 
@@ -265,7 +267,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										</>
 									</select>
 									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
+									<Image src={'/img/icons/Vector.svg'} className={'arrow-down'} alt="" width={15} height={9} unoptimized />
 								</Stack>
 								<Stack className="price-year-after-price">
 									<Typography className="title">Address</Typography>
@@ -298,7 +300,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										<option value={'no'}>No</option>
 									</select>
 									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
+									<Image src={'/img/icons/Vector.svg'} className={'arrow-down'} alt="" width={15} height={9} unoptimized />
 								</Stack>
 								<Stack className="price-year-after-price">
 									<Typography className="title">Rent</Typography>
@@ -316,7 +318,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										<option value={'no'}>No</option>
 									</select>
 									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
+									<Image src={'/img/icons/Vector.svg'} className={'arrow-down'} alt="" width={15} height={9} unoptimized />
 								</Stack>
 							</Stack>
 
@@ -340,7 +342,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										))}
 									</select>
 									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
+									<Image src={'/img/icons/Vector.svg'} className={'arrow-down'} alt="" width={15} height={9} unoptimized />
 								</Stack>
 								<Stack className="price-year-after-price">
 									<Typography className="title">Bed</Typography>
@@ -361,7 +363,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										))}
 									</select>
 									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
+									<Image src={'/img/icons/Vector.svg'} className={'arrow-down'} alt="" width={15} height={9} unoptimized />
 								</Stack>
 								<Stack className="price-year-after-price">
 									<Typography className="title">Square</Typography>
@@ -386,7 +388,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										})}
 									</select>
 									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
+									<Image src={'/img/icons/Vector.svg'} className={'arrow-down'} alt="" width={15} height={9} unoptimized />
 								</Stack>
 							</Stack>
 
@@ -483,15 +485,21 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 									</svg>
 								</Button>
 							</Stack>
-							<Stack className="gallery-box">
-								{insertPropertyData?.propertyImages.map((image: string) => {
-									const imagePath: string = `${REACT_APP_API_URL}/${image}`;
-									return (
-										<Stack className="image-box">
-											<img src={imagePath} alt="" />
-										</Stack>
-									);
-								})}
+						<Stack className="gallery-box">
+							{insertPropertyData?.propertyImages.map((image: string) => {
+								const imagePath: string = `${REACT_APP_API_URL}/${image}`;
+								return (
+									<Stack className="image-box" style={{ position: 'relative', overflow: 'hidden' }}>
+										<Image
+											src={imagePath}
+											alt=""
+											fill
+											sizes="(max-width: 640px) 100vw, 200px"
+											style={{ objectFit: 'cover' }}
+										/>
+									</Stack>
+								);
+							})}
 							</Stack>
 						</Stack>
 
@@ -531,3 +539,4 @@ AddProperty.defaultProps = {
 };
 
 export default AddProperty;
+

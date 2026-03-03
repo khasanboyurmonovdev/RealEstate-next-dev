@@ -10,14 +10,30 @@ export enum PropertyStatus {
 	DELETE = 'DELETE',
 }
 
+export enum PropertyVerificationStatus {
+	VERIFIED = 'VERIFIED',
+	PENDING = 'PENDING',
+	UNDER_REVIEW = 'UNDER_REVIEW',
+	REJECTED = 'REJECTED',
+}
+
 export enum PropertyLocation {
-	NEWYORK = 'NEWYORK',
-	CHICAGO = 'CHICAGO',
-	CALIFORNIA = 'CALIFORNIA',
-	PENNSYLVANIA = 'PENNSYLVANIA',
-	IOWA = 'IOWA',
-	ATLANTA = 'ATLANTA',
-	NEVADA = 'NEVADA',
-	TEXAS = 'TEXAS',
-	GEORGIA = 'GEORGIA',
+	// Tashkent districts
+	CHILONZOR = 'Chilonzor',
+	YUNUSABAD = 'Yunusabad',
+	MIRZO_ULUGBEK = 'Mirzo Ulugbek',
+	SERGELI = 'Sergeli',
+	YAKKASAROY = 'Yakkasaroy',
+	SHAYXONTOHUR = 'Shayxontohur',
+	OLMAZOR = 'Olmazor',
+	UCHTEPA = 'Uchtepa',
+	BEKTEMIR = 'Bektemir',
+	YASHNOBOD = 'Yashnobod',
+	// Cities
+	TASHKENT = 'Tashkent',
+	SAMARKAND = 'Samarkand',
+	BUKHARA = 'Bukhara',
+	ANDIJAN = 'Andijan',
+	FERGANA = 'Fergana',
+	NAMANGAN = 'Namangan',
 }

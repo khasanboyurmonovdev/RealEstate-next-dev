@@ -1,0 +1,76 @@
+// Phase 4 Task 6 — Mobile Bottom Nav Styles
+@import '../../scss/variables.scss';
+
+.mobile-bottom-nav {
+	display: none;
+
+	@media (max-width: #{$breakpoint-md - 1px}) {
+		display: flex;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 60px;
+		background: $color-white;
+		border-top: 1px solid $color-gray-100;
+		box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+		z-index: $z-sticky;
+		align-items: flex-end;
+		justify-content: space-around;
+		padding-bottom: env(safe-area-inset-bottom, 0);
+		padding-top: $space-2;
+	}
+
+	.nav-item {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: $space-1;
+		text-decoration: none;
+		color: $color-gray-400;
+		font-family: $font-secondary;
+		font-size: $font-size-xs;
+		font-weight: $font-weight-medium;
+		min-height: 44px;
+		transition: color $transition-fast;
+
+		&.active {
+			color: $color-primary;
+			.nav-icon {
+				color: $color-primary;
+			}
+		}
+
+		&.center {
+			flex: 0 0 auto;
+			.center-btn {
+				width: 48px;
+				height: 48px;
+				margin-top: -16px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: $color-accent;
+				color: $color-white;
+				border-radius: $radius-full;
+				box-shadow: $shadow-accent;
+				transition: background $transition-base, transform $transition-base;
+				&:hover {
+					background: $color-accent-dark;
+					transform: scale(1.05);
+				}
+			}
+		}
+
+		.nav-icon {
+			width: 22px;
+			height: 22px;
+		}
+
+		.nav-label {
+			line-height: 1;
+		}
+	}
+}

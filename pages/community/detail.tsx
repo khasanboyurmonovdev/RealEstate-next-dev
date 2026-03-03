@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
@@ -237,7 +239,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 					<Stack className="main-box">
 						<Stack className="left-config">
 							<Stack className={'image-info'}>
-								<img src={'/img/logo/propnation2.svg'} />
+								<Image src={'/img/logo/ijaraly2.svg'} alt="Ijaraly" width={100} height={40} unoptimized />
 								<Stack className={'community-name'}>
 									<Typography className={'name'}>Community Board Article</Typography>
 								</Stack>
@@ -392,7 +394,14 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 														className="name-date"
 														onClick={() => goMemberPage(commentData?.memberData?._id as string)}
 													>
-														<img src={getCommentMemberImage(commentData?.memberData?.memberImage)} alt="" />
+														<Image
+									src={getCommentMemberImage(commentData?.memberData?.memberImage)}
+									alt=""
+									width={48}
+									height={48}
+									style={{ objectFit: 'cover', borderRadius: '50%' }}
+									unoptimized={getCommentMemberImage(commentData?.memberData?.memberImage).endsWith('.svg')}
+								/>
 														<Stack className="name-date-column">
 															<Typography className="name">{commentData?.memberData?.memberNick}</Typography>
 															<Typography className="date">

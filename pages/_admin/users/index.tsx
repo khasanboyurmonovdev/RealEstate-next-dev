@@ -1,4 +1,6 @@
+// Phase 4 Task 8
 import React, { useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
 import type { NextPage } from 'next';
 import withAdminLayout from '../../../libs/components/layout/LayoutAdmin';
 import { MemberPanelList } from '../../../libs/components/admin/users/MemberList';
@@ -227,7 +229,7 @@ const AdminUsers: NextPage = ({ initialInquiry, ...props }: any) => {
 												/>
 											)}
 											<InputAdornment position="end" onClick={() => searchTextHandler()}>
-												<img src="/img/icons/search_icon.png" alt={'searchIcon'} />
+												<Image src="/img/icons/search_icon.png" alt="searchIcon" width={20} height={20} />
 											</InputAdornment>
 										</>
 									}

@@ -1,0 +1,131 @@
+// Phase 4 Task 6 — Join/Auth Mobile
+@import '../variables.scss';
+
+#mobile-wrap {
+	.join-page-mobile {
+		padding: $space-8 $space-4;
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.container {
+			width: 100%;
+			max-width: 440px;
+			margin: 0 auto;
+		}
+
+		.main {
+			width: 100%;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.left {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: $space-6;
+			background: $color-white;
+			border-radius: $radius-xl;
+			box-shadow: $shadow-md;
+		}
+
+		.logo {
+			display: flex;
+			align-items: center;
+			gap: $space-2;
+			img {
+				width: 40px;
+				height: 40px;
+			}
+			span {
+				font-family: $font-primary;
+				font-size: $font-size-xl;
+				font-weight: $font-weight-semibold;
+				color: $color-gray-900;
+			}
+		}
+
+		.info {
+			margin-top: $space-6;
+			text-align: center;
+			span {
+				font-family: $font-primary;
+				font-size: $font-size-lg;
+				font-weight: $font-weight-semibold;
+				color: $color-gray-900;
+			}
+			p {
+				margin-top: $space-2;
+				font-family: $font-secondary;
+				font-size: $font-size-sm;
+				color: $color-gray-600;
+			}
+		}
+
+		.input-wrap {
+			margin-top: $space-6;
+			width: 100%;
+			.input-box {
+				margin-top: $space-4;
+				display: flex;
+				flex-direction: column;
+				&:first-child {
+					margin-top: 0;
+				}
+				span {
+					margin-bottom: $space-2;
+					font-family: $font-secondary;
+					font-size: $font-size-sm;
+					font-weight: $font-weight-semibold;
+					color: $color-gray-800;
+				}
+				input {
+					width: 100%;
+					min-height: 48px;
+					padding: 0 $space-4;
+					border-radius: $radius-md;
+					border: 1px solid $color-gray-200;
+					background: $color-white;
+					font-family: $font-secondary;
+					font-size: $font-size-base;
+					color: $color-gray-800;
+				}
+			}
+		}
+
+		.register {
+			margin-top: $space-6;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			button {
+				width: 100%;
+				min-height: 48px;
+				border-radius: $radius-lg;
+				font-family: $font-primary;
+				font-size: $font-size-base;
+				font-weight: $font-weight-semibold;
+				text-transform: none;
+			}
+		}
+
+		.ask-info {
+			margin-top: $space-6;
+			p {
+				font-family: $font-secondary;
+				font-size: $font-size-base;
+				color: $color-gray-700;
+				b {
+					margin-left: $space-2;
+					font-weight: $font-weight-semibold;
+					cursor: pointer;
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+}

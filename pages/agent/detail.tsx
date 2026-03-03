@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
@@ -192,15 +194,19 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 		return (
 			<Stack className={'agent-detail-page'}>
 				<Stack className={'container'}>
-					<Stack className={'agent-info'}>
-						<img
-							src={agent?.memberImage ? `${REACT_APP_API_URL}/${agent?.memberImage}` : '/img/profile/defaultUser.svg'}
-							alt=""
-						/>
-						<Box component={'div'} className={'info'} onClick={() => redirectToMemberPageHandler(agent?._id as string)}>
-							<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>
-							<div>
-								<img src="/img/icons/call.svg" alt="" />
+				<Stack className={'agent-info'}>
+					<Image
+						src={agent?.memberImage ? `${REACT_APP_API_URL}/${agent?.memberImage}` : '/img/profile/defaultUser.svg'}
+						alt=""
+						width={120}
+						height={120}
+						style={{ objectFit: 'cover', borderRadius: '50%' }}
+						unoptimized={!agent?.memberImage}
+					/>
+					<Box component={'div'} className={'info'} onClick={() => redirectToMemberPageHandler(agent?._id as string)}>
+						<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>
+						<div>
+							<Image src="/img/icons/call.svg" alt="" width={16} height={16} unoptimized />
 								<span>{agent?.memberPhone}</span>
 							</div>
 						</Box>
@@ -236,10 +242,10 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 									</span>
 								</>
 							) : (
-								<div className={'no-data'}>
-									<img src="/img/icons/icoAlert.svg" alt="" />
-									<p>No properties found!</p>
-								</div>
+							<div className={'no-data'}>
+								<Image src="/img/icons/icoAlert.svg" alt="" width={56} height={56} unoptimized />
+								<p>No properties found!</p>
+							</div>
 							)}
 						</Stack>
 					</Stack>

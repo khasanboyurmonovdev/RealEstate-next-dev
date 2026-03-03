@@ -1,4 +1,7 @@
+// Phase 4 Task 6 — Mobile polish
+// Phase 4 Task 8 — next/image migration
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Pagination, Stack, Typography } from '@mui/material';
@@ -57,7 +60,47 @@ const MyFavorites: NextPage = () => {
 	};
 
 	if (device === 'mobile') {
-		return <div>NESTAR MY FAVORITES MOBILE</div>;
+		return (
+			<div id="my-favorites-page" className="my-favorites-mobile">
+				<Stack className="main-title-box">
+					<Typography className="main-title">My Favorites</Typography>
+					<Typography className="sub-title">Homes you love, saved for later.</Typography>
+				</Stack>
+				<Stack className="favorites-list-box">
+					{myFavorites?.length ? (
+						myFavorites.map((property: Property) => (
+							<PropertyCard
+								likePropertyHandler={likePropertyHandler}
+								key={property._id}
+								property={property}
+								myFavorites
+							/>
+						))
+					) : (
+						<div className="no-data">
+							<Image src="/img/icons/icoAlert.svg" alt="" width={56} height={56} unoptimized style={{ maxWidth: 280, margin: '0 auto' }} />
+							<p>No Favorites found!</p>
+						</div>
+					)}
+				</Stack>
+				{myFavorites?.length ? (
+					<Stack className="pagination-config">
+						<Stack className="pagination-box">
+							<Pagination
+								count={Math.ceil(total / searchFavorites.limit)}
+								page={searchFavorites.page}
+								shape="circular"
+								color="primary"
+								onChange={paginationHandler}
+								showFirstButton={false}
+								showLastButton={false}
+								siblingCount={1}
+							/>
+						</Stack>
+					</Stack>
+				) : null}
+			</div>
+		);
 	} else {
 		return (
 			<div id="my-favorites-page">
@@ -81,7 +124,7 @@ const MyFavorites: NextPage = () => {
 						})
 					) : (
 						<div className={'no-data'}>
-							<img src="/img/icons/icoAlert.svg" alt="" />
+							<Image src="/img/icons/icoAlert.svg" alt="" width={56} height={56} unoptimized />
 							<p>No Favorites found!</p>
 						</div>
 					)}

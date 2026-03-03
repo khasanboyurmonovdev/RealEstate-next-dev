@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Stack, Box } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -86,7 +88,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 								<Link href={'/property'}>
 									<span>See All Categories</span>
 								</Link>
-								<img src="/img/icons/rightup.svg" alt="" />
+								<Image src="/img/icons/rightup.svg" alt="" width={16} height={16} unoptimized />
 							</div>
 						</Box>
 					</Stack>

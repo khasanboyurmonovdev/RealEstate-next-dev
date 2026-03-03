@@ -1,4 +1,8 @@
+// Phase 4 Task 6 — Mobile polish
+// Phase 4 Task 7 — Logic preserved; FilterBar replaces UI on property page
+// Phase 4 Task 8
 import React, { useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
 import {
 	Stack,
 	Typography,
@@ -32,10 +36,12 @@ interface FilterType {
 	searchFilter: PropertiesInquiry;
 	setSearchFilter: any;
 	initialInput: PropertiesInquiry;
+	/** Phase 4 Task 6: force desktop layout when Filter is inside mobile drawer */
+	forceDesktop?: boolean;
 }
 
 const Filter = (props: FilterType) => {
-	const { searchFilter, setSearchFilter, initialInput } = props;
+	const { searchFilter, setSearchFilter, initialInput, forceDesktop } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [propertyLocation, setPropertyLocation] = useState<PropertyLocation[]>(Object.values(PropertyLocation));
@@ -528,8 +534,8 @@ const Filter = (props: FilterType) => {
 		}
 	};
 
-	if (device === 'mobile') {
-		return <div>PROPERTIES FILTER</div>;
+	if (device === 'mobile' && !forceDesktop) {
+		return null;
 	} else {
 		return (
 			<Stack className={'filter-main'}>
@@ -564,7 +570,7 @@ const Filter = (props: FilterType) => {
 								</>
 							}
 						/>
-						<img src={'/img/icons/search_icon.png'} alt={''} />
+						<Image src="/img/icons/search_icon.png" alt="" width={20} height={20} />
 						<Tooltip title="Reset">
 							<IconButton onClick={refreshHandler}>
 								<RefreshIcon />
@@ -838,7 +844,7 @@ const Filter = (props: FilterType) => {
 					<Stack className="square-year-input">
 						<input
 							type="number"
-							placeholder="$ min"
+							placeholder="min so'm"
 							min={0}
 							value={searchFilter?.search?.pricesRange?.start ?? 0}
 							onChange={(e: any) => {
@@ -850,7 +856,7 @@ const Filter = (props: FilterType) => {
 						<div className="central-divider"></div>
 						<input
 							type="number"
-							placeholder="$ max"
+							placeholder="max so'm"
 							value={searchFilter?.search?.pricesRange?.end ?? 0}
 							onChange={(e: any) => {
 								if (e.target.value >= 0) {

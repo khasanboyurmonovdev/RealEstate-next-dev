@@ -1,11 +1,14 @@
+// Phase 4 Task 4
+// Phase 4 Task 8 — next/image migration
 import { Menu, MenuItem, Stack, Typography } from '@mui/material';
+import Image from 'next/image';
 import React, { useState } from 'react';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import IconButton from '@mui/material/IconButton';
 import ModeIcon from '@mui/icons-material/Mode';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Property } from '../../types/property/property';
-import { formatterStr } from '../../utils';
+import { formatUZSShort } from '../../utils';
 import Moment from 'react-moment';
 import { useRouter } from 'next/router';
 import { PropertyStatus } from '../../enums/property.enum';
@@ -55,14 +58,21 @@ export const PropertyCard = (props: PropertyCardProps) => {
 	} else
 		return (
 			<Stack className="property-card-box">
-				<Stack className="image-box" onClick={() => pushPropertyDetail(property?._id)}>
-					<img src={`${process.env.REACT_APP_API_URL}/${property.propertyImages[0]}`} alt="" />
-				</Stack>
+			<Stack className="image-box" style={{ position: 'relative', overflow: 'hidden' }} onClick={() => pushPropertyDetail(property?._id)}>
+				<Image
+					src={`${process.env.REACT_APP_API_URL}/${property.propertyImages[0]}`}
+					alt={property.propertyTitle ?? ''}
+					fill
+					sizes="(max-width: 640px) 100vw, 260px"
+					style={{ objectFit: 'cover' }}
+					onError={(e) => { e.currentTarget.src = '/images/placeholder-property.svg'; }}
+				/>
+			</Stack>
 				<Stack className="information-box" onClick={() => pushPropertyDetail(property?._id)}>
 					<Typography className="name">{property.propertyTitle}</Typography>
 					<Typography className="address">{property.propertyAddress}</Typography>
 					<Typography className="price">
-						<strong>${formatterStr(property?.propertyPrice)}</strong>/ mo
+						<strong>{formatUZSShort(property?.propertyPrice ?? 0)}</strong>/ oy
 					</Typography>
 				</Stack>
 				<Stack className="date-box">

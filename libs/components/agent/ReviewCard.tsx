@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React from 'react';
+import Image from 'next/image';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Stack, Box, Typography } from '@mui/material';
 import { Comment } from '../../types/comment/comment';
@@ -23,7 +25,14 @@ const ReviewCard = (props: ReviewCardProps) => {
 			<Box component={'div'} className={'review-card'}>
 				<div className={'info'}>
 					<div className={'left'}>
-						<img src={imagePath} alt="" />
+						<Image
+						src={imagePath}
+						alt=""
+						width={55}
+						height={59}
+						style={{ objectFit: 'cover', borderRadius: '50%' }}
+						unoptimized={imagePath.endsWith('.svg')}
+					/>
 						<div>
 							<strong>{comment.memberData?.memberNick}</strong>
 							<span>

@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React from 'react';
+import Image from 'next/image';
 import { NextPage } from 'next';
 import { getLocaleMessages } from '../../libs/i18n';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
@@ -16,16 +18,16 @@ const About: NextPage = () => {
 				<Stack className={'intro'}>
 					<Stack className={'container'}>
 						<Stack className={'left'}>
-							<strong>Your property journey begins here. Welcome to PropNation. </strong>
+							<strong>Your property journey begins here. Welcome to Ijaraly. </strong>
 						</Stack>
 						<Stack className={'right'}>
 							<p>
-								At PropNation, we believe that finding the right home should be simple, reliable, and empowering.
+								At Ijaraly, we believe that finding the right home should be simple, reliable, and empowering.
 								Whether you're searching for a cozy apartment, a luxurious villa, or a family-friendly house, our
 								platform connects you to the best properties across the United States.
 								<br />
 								<br />
-								Founded with the vision of redefining the real estate experience, PropNation combines cutting-edge
+								Founded with the vision of redefining the real estate experience, Ijaraly combines cutting-edge
 								technology with a human-centered approach. We’re committed to transparency, trust, and delivering value
 								to both buyers and sellers. Our growing database features listings from top cities and hidden gems
 								alike, helping people discover places they can truly call home. With intuitive search tools, verified
@@ -33,16 +35,16 @@ const About: NextPage = () => {
 							</p>
 							<Stack className={'boxes'}>
 								<div className={'box'}>
-									<div>
-										<img src="/img/icons/garden.svg" alt="" />
-									</div>
-									<span>Next-Gen Villas</span>
-									<p>Future-ready homes with innovative features and timeless design.</p>
+								<div>
+									<Image src="/img/icons/garden.svg" alt="" width={40} height={40} unoptimized />
 								</div>
-								<div className={'box'}>
-									<div>
-										<img src="/img/icons/securePayment.svg" alt="" />
-									</div>
+								<span>Next-Gen Villas</span>
+								<p>Future-ready homes with innovative features and timeless design.</p>
+							</div>
+							<div className={'box'}>
+								<div>
+									<Image src="/img/icons/securePayment.svg" alt="" width={40} height={40} unoptimized />
+								</div>
 									<span>Safe & Easy Transactions </span>
 									<p>Your payments are protected with industry-standard encryption and fast processing.</p>
 								</div>
@@ -52,9 +54,9 @@ const About: NextPage = () => {
 				</Stack>
 				<Stack className={'statistics'}>
 					<Stack className={'container'}>
-						<Stack className={'banner'}>
-							<img src="/img/banner/Header3.jpg" alt="" />
-						</Stack>
+					<Stack className={'banner'} style={{ position: 'relative', overflow: 'hidden' }}>
+						<Image src="/img/banner/Header3.jpg" alt="" fill sizes="100vw" style={{ objectFit: 'cover' }} priority />
+					</Stack>
 						<Stack className={'info'}>
 							<Box component={'div'}>
 								<strong> 4M+</strong>
@@ -82,13 +84,13 @@ const About: NextPage = () => {
 						</Stack>
 					</Stack>
 				</Stack>
-				<Stack className={'options'}>
-					<img src="/img/banner/Aboutbanner.jpg" alt="" className={'about-banner'} />
+			<Stack className={'options'} style={{ position: 'relative' }}>
+				<Image src="/img/banner/Aboutbanner.jpg" alt="" fill sizes="100vw" style={{ objectFit: 'cover' }} className={'about-banner'} />
 					<Stack className={'container'}>
 						<strong>Helping You Make the Right Move</strong>
 						<Stack>
 							<div className={'icon-box'}>
-								<img src="/img/icons/security.svg" alt="" />
+								<Image src="/img/icons/security.svg" alt="" width={40} height={40} unoptimized />
 							</div>
 							<div className={'text-box'}>
 								<span>Full-Scale Protection</span>
@@ -97,7 +99,7 @@ const About: NextPage = () => {
 						</Stack>
 						<Stack>
 							<div className={'icon-box'}>
-								<img src="/img/icons/keywording.svg" alt="" />
+								<Image src="/img/icons/keywording.svg" alt="" width={40} height={40} unoptimized />
 							</div>
 							<div className={'text_-box'}>
 								<span>Targeted Search Power</span>
@@ -106,7 +108,7 @@ const About: NextPage = () => {
 						</Stack>
 						<Stack>
 							<div className={'icon-box'}>
-								<img src="/img/icons/investment.svg" alt="" />
+								<Image src="/img/icons/investment.svg" alt="" width={40} height={40} unoptimized />
 							</div>
 							<div className={'text-box'}>
 								<span>Value That Lasts</span>
@@ -115,7 +117,7 @@ const About: NextPage = () => {
 						</Stack>
 						<Stack className={'btn'}>
 							Learn More
-							<img src="/img/icons/rightup.svg" alt="" />
+							<Image src="/img/icons/rightup.svg" alt="" width={16} height={16} unoptimized />
 						</Stack>
 					</Stack>
 				</Stack>
@@ -123,11 +125,11 @@ const About: NextPage = () => {
 					<Stack className={'container'}>
 						<span>Trusted bu the world's best</span>
 						<Stack className={'wrap'}>
-							<img src="/img/icons/brands/amazon.svg" alt="" />
-							<img src="/img/icons/brands/amd.svg" alt="" />
-							<img src="/img/icons/brands/cisco.svg" alt="" />
-							<img src="/img/icons/brands/dropcam.svg" alt="" />
-							<img src="/img/icons/brands/spotify.svg" alt="" />
+						<Image src="/img/icons/brands/amazon.svg" alt="Amazon" width={80} height={24} unoptimized />
+						<Image src="/img/icons/brands/amd.svg" alt="AMD" width={80} height={24} unoptimized />
+						<Image src="/img/icons/brands/cisco.svg" alt="Cisco" width={80} height={24} unoptimized />
+						<Image src="/img/icons/brands/dropcam.svg" alt="Dropcam" width={80} height={24} unoptimized />
+						<Image src="/img/icons/brands/spotify.svg" alt="Spotify" width={80} height={24} unoptimized />
 						</Stack>
 					</Stack>
 				</Stack>
@@ -139,11 +141,11 @@ const About: NextPage = () => {
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'white'}>
-								Connect with Us
-								<img src="/img/icons/rightup.svg" alt="" />
+						Connect with Us
+							<Image src="/img/icons/rightup.svg" alt="" width={16} height={16} unoptimized />
 							</div>
 							<div className={'black'}>
-								<img src="/img/icons/call.svg" alt="" />
+								<Image src="/img/icons/call.svg" alt="" width={16} height={16} unoptimized />
 								+821073751408
 							</div>
 						</Box>

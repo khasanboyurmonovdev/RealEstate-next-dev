@@ -1,4 +1,6 @@
+// Phase 4 Task 8
 import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
@@ -237,7 +239,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 					<Stack className={'card-wrap'}>
 						{agents?.length === 0 ? (
 							<div className={'no-data'}>
-								<img src="/img/icons/icoAlert.svg" alt="" />
+								<Image src="/img/icons/icoAlert.svg" alt="" width={80} height={80} unoptimized />
 								<p>No Agents found!</p>
 							</div>
 						) : (

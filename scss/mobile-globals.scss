@@ -1,0 +1,85 @@
+// Phase 4 Task 6 — Global Mobile Fixes
+@import 'variables.scss';
+
+// 1. Prevent horizontal overflow
+html,
+body {
+	overflow-x: hidden;
+	max-width: 100vw;
+}
+* {
+	box-sizing: border-box;
+}
+
+// 2. Form inputs (iOS zoom prevention, focus states)
+input,
+select,
+textarea {
+	font-size: $font-size-base;
+	border-radius: $radius-md;
+	@media (max-width: #{$breakpoint-md - 1px}) {
+		min-height: 48px;
+		&:focus {
+			border-color: $color-primary;
+			outline: none;
+			box-shadow: 0 0 0 3px rgba(18, 70, 230, 0.15);
+		}
+	}
+}
+
+// 3. Typography scale on mobile
+@media (max-width: #{$breakpoint-md - 1px}) {
+	h1, .font-5xl { font-size: $font-size-3xl !important; }
+	h2, .font-4xl { font-size: $font-size-2xl !important; }
+	h3, .font-3xl { font-size: $font-size-xl !important; }
+	// Ensure no font below xs
+	body, p, span, label {
+		font-size: max($font-size-xs, 1em);
+	}
+}
+
+// 4. Touch targets (minimum 44x44px)
+@media (max-width: #{$breakpoint-md - 1px}) {
+	button:not(.preserve-size),
+	a:not(.preserve-size),
+	[role="button"],
+	.MuiButton-root,
+	.MuiIconButton-root {
+		min-width: 44px;
+		min-height: 44px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.MuiPagination-item {
+		min-width: 44px;
+		min-height: 44px;
+	}
+}
+
+// 5. Reduced motion
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after {
+		animation-duration: 0.01ms !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+// 6. Backdrop filter — only above md (performance)
+@media (max-width: #{$breakpoint-md - 1px}) {
+	.navbar-main.scrolled,
+	.mobile-drawer-content {
+		backdrop-filter: none !important;
+		background: $color-white !important;
+	}
+}
+
+// 7. Page content padding for bottom nav
+@media (max-width: #{$breakpoint-md - 1px}) {
+	#mobile-wrap #main {
+		padding-bottom: 80px;
+	}
+	#pc-wrap #main {
+		padding-bottom: 0;
+	}
+}

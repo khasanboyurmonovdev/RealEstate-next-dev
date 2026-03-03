@@ -1,6 +1,167 @@
 @import '/scss/variables.scss';
+@import '/scss/mobile/property-list.scss';
+@import '/scss/mobile/join.scss';
+@import '/scss/mobile/mypage.scss';
 
+// Phase 4 Task 2 — Mobile navbar and drawer
 #mobile-wrap {
+  #top {
+    .navbar {
+      .navbar-main {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: $navbar-height;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $color-white;
+        z-index: $z-sticky;
+        transition: background-color $transition-base, box-shadow $transition-base, backdrop-filter $transition-base;
+        &.scrolled {
+          background: rgba(255, 255, 255, 0.96);
+          backdrop-filter: blur(12px);
+          box-shadow: $shadow-sm;
+        }
+        .navbar-container {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          padding: 0 $container-padding;
+          .logo-box {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 4px;
+            .logo-text {
+              font-family: $font-primary;
+              font-size: $font-size-xl;
+              font-weight: $font-weight-extrabold;
+              color: $color-primary;
+              line-height: $line-height-tight;
+            }
+            .logo-accent {
+              width: 8px;
+              height: 8px;
+              border-radius: $radius-full;
+              background-color: $color-accent;
+            }
+          }
+          .nav-links,
+          .actions-box {
+            display: none !important;
+          }
+          .hamburger-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            border: none;
+            background: none;
+            color: $color-gray-700;
+            cursor: pointer;
+            border-radius: $radius-md;
+          }
+        }
+      }
+      .mobile-drawer {
+        position: fixed;
+        top: $navbar-height;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: $z-overlay;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity $transition-base, visibility $transition-base;
+        &.open {
+          opacity: 1;
+          visibility: visible;
+          .mobile-drawer-content {
+            transform: translateY(0);
+          }
+        }
+        .mobile-drawer-content {
+          background: $color-white;
+          padding: $space-6;
+          transform: translateY(-20px);
+          transition: transform $transition-base;
+          max-height: calc(100vh - #{$navbar-height});
+          overflow-y: auto;
+          .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: $space-4;
+            a {
+              font-family: $font-secondary;
+              font-size: $font-size-lg;
+              font-weight: $font-weight-medium;
+              color: $color-gray-800;
+              text-decoration: none;
+              padding: $space-2 0;
+              &.active {
+                color: $color-primary;
+                font-weight: $font-weight-semibold;
+              }
+            }
+          }
+          .mobile-actions {
+            display: flex;
+            flex-direction: column;
+            gap: $space-4;
+            margin-top: $space-6;
+            button {
+              width: 100%;
+              padding: $space-4;
+              border-radius: $radius-md;
+              font-family: $font-primary;
+              font-size: $font-size-sm;
+              font-weight: $font-weight-semibold;
+              cursor: pointer;
+              border: none;
+            }
+            .btn-login {
+              color: $color-primary;
+              background: none;
+              border: 2px solid $color-primary;
+            }
+            .btn-post-listing {
+              color: $color-white;
+              background-color: $color-accent;
+              box-shadow: $shadow-accent;
+            }
+          }
+          .mobile-lang-toggle {
+            display: flex;
+            gap: $space-2;
+            margin-top: $space-6;
+            padding-top: $space-6;
+            border-top: 1px solid $color-gray-200;
+            .lang-pill-item {
+              padding: $space-2 $space-4;
+              border: 1px solid $color-gray-200;
+              border-radius: $radius-full;
+              font-size: $font-size-xs;
+              font-weight: $font-weight-medium;
+              background: none;
+              cursor: pointer;
+              &.active {
+                color: $color-primary;
+                font-weight: $font-weight-semibold;
+                border-color: $color-primary;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
   .top {
     height: 100px;
     display: flex;
@@ -855,4 +1016,20 @@
       }
     }
   }
+}
+
+// Phase 4 Task 6 — Homepage mobile section polish (override hardcoded padding)
+#mobile-wrap {
+	.trend-properties,
+	.popular-properties,
+	.top-properties,
+	.top-agents {
+		padding-left: $space-4 !important;
+		padding-right: $space-4 !important;
+		padding-top: $space-10 !important;
+		padding-bottom: $space-10 !important;
+	}
+	.home-page {
+		padding-bottom: 100px;
+	}
 }

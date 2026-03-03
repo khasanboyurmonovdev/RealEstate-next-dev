@@ -1,3 +1,4 @@
+// Phase 4 Task 6 — Mobile polish
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
@@ -103,7 +104,38 @@ const MyPage: NextPage = () => {
 	};
 
 	if (device === 'mobile') {
-		return <div>MY PAGE</div>;
+		return (
+			<div id="my-page" className="my-page-mobile">
+				<div className="my-page-mobile-container">
+					<MyMenu />
+					<Stack className="my-page-mobile-content">
+						{category === 'addProperty' && <AddProperty />}
+						{category === 'myProperties' && <MyProperties />}
+						{category === 'myFavorites' && <MyFavorites />}
+						{category === 'recentlyVisited' && <RecentlyVisited />}
+						{category === 'myArticles' && <MyArticles />}
+						{category === 'writeArticle' && <WriteArticle />}
+						{category === 'myProfile' && <MyProfile />}
+						{category === 'followers' && (
+							<MemberFollowers
+								subscribeHandler={subscribeHandler}
+								unsubscribeHandler={unsubscribeHandler}
+								redirectToMemberPageHandler={redirectToMemberPageHandler}
+								likeMemberHandler={likeMemberHandler}
+							/>
+						)}
+						{category === 'followings' && (
+							<MemberFollowings
+								subscribeHandler={subscribeHandler}
+								unsubscribeHandler={unsubscribeHandler}
+								redirectToMemberPageHandler={redirectToMemberPageHandler}
+								likeMemberHandler={likeMemberHandler}
+							/>
+						)}
+					</Stack>
+				</div>
+			</div>
+		);
 	} else {
 		return (
 			<div id="my-page" style={{ position: 'relative' }}>

@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React, { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Stack, Typography } from '@mui/material';
@@ -65,7 +67,7 @@ const CommunityBoards = () => {
 								<Link href={'/community?articleCategory=NEWS'}>
 									<span>News</span>
 								</Link>
-								<img src="/img/icons/arrowBig.svg" alt="" />
+								<Image src="/img/icons/arrowBig.svg" alt="" width={24} height={24} unoptimized />
 							</Stack>
 							<Stack className={'card-wrap'}>
 								{newsArticles.map((article, index) => {
@@ -78,7 +80,7 @@ const CommunityBoards = () => {
 								<Link href={'/community?articleCategory=FREE'}>
 									<span>Free</span>
 								</Link>
-								<img src="/img/icons/arrowBig.svg" alt="" />
+								<Image src="/img/icons/arrowBig.svg" alt="" width={24} height={24} unoptimized />
 							</Stack>
 							<Stack className={'card-wrap vertical'}>
 								{freeArticles.map((article, index) => {

@@ -1,3 +1,5 @@
+// Phase 4 Task 8 — next/image migration
+import Image from 'next/image';
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TelegramIcon from '@mui/icons-material/Telegram';
@@ -15,11 +17,11 @@ const Footer = () => {
 				<Stack className={'main'}>
 					<Stack className={'left'}>
 						<Box component={'div'} className={'footer-box'}>
-							<img src="/img/logo/propnation.svg" alt="" className={'logo'} />
+							<Image src="/img/logo/ijaraly.svg" alt="Ijaraly" width={120} height={40} className={'logo'} unoptimized />
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
 							<span>We're Here to Help</span>
-							<p>support@propnationgmail.com</p>
+							<p>support@ijaralygmail.com</p>
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
 							<span> Support Center</span>
@@ -54,16 +56,16 @@ const Footer = () => {
 							</div>
 							<div>
 								<strong>Discover</strong>
-								<span>New York</span>
-								<span>California</span>
-								<span>Chicago</span>
-								<span>Pensylvania</span>
+								<span>Tashkent</span>
+								<span>Samarkand</span>
+								<span>Bukhara</span>
+								<span>Fergana</span>
 							</div>
 						</Box>
 					</Stack>
 				</Stack>
 				<Stack className={'second'}>
-					<span>© PropNation - All rights reserved. PropNation {moment().year()}</span>
+					<span>© Ijaraly - All rights reserved. Ijaraly {moment().year()}</span>
 				</Stack>
 			</Stack>
 		);
@@ -73,11 +75,11 @@ const Footer = () => {
 				<Stack className={'main'}>
 					<Stack className={'left'}>
 						<Box component={'div'} className={'footer-box'}>
-							<img src="/img/logo/propnation2.png" alt="" className={'logo'} />
+							<Image src="/img/logo/ijaraly2.png" alt="Ijaraly" width={120} height={40} className={'logo'} />
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
 							<span>We're Here to Help</span>
-							<p>support@propnationgmail.com</p>
+							<p>support@ijaralygmail.com</p>
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
 							<span>Support Center</span>
@@ -119,16 +121,16 @@ const Footer = () => {
 							</div>
 							<div>
 								<strong>Discover</strong>
-								<span>New York</span>
-								<span>California</span>
-								<span>Chicago</span>
-								<span>Pensylvania</span>
+								<span>Tashkent</span>
+								<span>Samarkand</span>
+								<span>Bukhara</span>
+								<span>Fergana</span>
 							</div>
 						</Box>
 					</Stack>
 				</Stack>
 				<Stack className={'second'}>
-					<span>© PropNation - All rights reserved. PropNation {moment().year()}</span>
+					<span>© Ijaraly - All rights reserved. Ijaraly {moment().year()}</span>
 					<span>Privacy · Terms · Sitemap</span>
 				</Stack>
 			</Stack>

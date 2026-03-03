@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Stack, Box } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
@@ -81,7 +83,7 @@ const TopAgents = (props: TopAgentsProps) => {
 						<Box component={'div'} className={'right'} onClick={() => router.push('/agent')} sx={{ cursor: 'pointer' }}>
 							<div className={'more-box'}>
 								<span>See All Agents</span>
-								<img src="/img/icons/rightup.svg" alt="" />
+								<Image src="/img/icons/rightup.svg" alt="" width={16} height={16} unoptimized />
 							</div>
 						</Box>
 					</Stack>

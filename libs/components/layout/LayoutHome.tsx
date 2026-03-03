@@ -4,8 +4,7 @@ import Head from 'next/head';
 import Top from '../Top';
 import Footer from '../Footer';
 import { Stack } from '@mui/material';
-import FiberContainer from '../common/FiberContainer';
-import HeaderFilter from '../homepage/HeaderFilter';
+import HeroHomepage from '../homepage/HeroHomepage';
 import { userVar } from '../../../apollo/store';
 import { useReactiveVar } from '@apollo/client';
 import { getJwtToken, updateUserInfo } from '../../auth';
@@ -31,14 +30,14 @@ const withLayoutMain = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>PropNation</title>
-						<meta name={'title'} content={`PropNation`} />
+						<title>Ijaraly</title>
+						<meta name={'title'} content={`Ijaraly`} />
 					</Head>
 					<Stack id="mobile-wrap">
 						<Stack id={'top'}>
 							<Top />
 						</Stack>
-
+						<HeroHomepage />
 						<Stack id={'main'}>
 							<Component {...props} />
 						</Stack>
@@ -53,8 +52,8 @@ const withLayoutMain = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>PropNation</title>
-						<meta name={'title'} content={`PropNation`} />
+						<title>Ijaraly</title>
+						<meta name={'title'} content={`Ijaraly`} />
 					</Head>
 					<Stack id="pc-wrap">
 						<Stack id={'top'}>
@@ -62,12 +61,7 @@ const withLayoutMain = (Component: any) => {
 							<Top />{' '}
 						</Stack>
 
-						<Stack className={'header-main'}>
-							<FiberContainer />
-							<Stack className={'container'}>
-								<HeaderFilter />
-							</Stack>
-						</Stack>
+						<HeroHomepage />
 
 						<Stack id={'main'}>
 							<Component {...props} />

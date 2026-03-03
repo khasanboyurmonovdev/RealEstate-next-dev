@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+// Phase 4 Task 2
+// Phase 4 Task 8 — next/image migration
+import React, { useCallback, useEffect } from 'react';
 import { useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -8,12 +10,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { alpha, styled } from '@mui/material/styles';
 import Menu, { MenuProps } from '@mui/material/Menu';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { CaretDown } from 'phosphor-react';
-import useDeviceDetect from '../hooks/useDeviceDetect';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import Link from 'next/link';
+import Image from 'next/image';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
-import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
+import { useMutation, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
 import { Messages, REACT_APP_API_URL } from '../config';
@@ -23,416 +25,228 @@ import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../sweetAlert';
 import { notificationsVar } from '../../apollo/store';
 
 const Top = () => {
-	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
-	const { t, i18n } = useTranslation('common');
+	const { t } = useTranslation('common');
 	const router = useRouter();
-	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
-	const [lang, setLang] = useState<string | null>('en');
-	const drop = Boolean(anchorEl2);
-	const [colorChange, setColorChange] = useState(false);
-	const [anchorEl, setAnchorEl] = React.useState<any | HTMLElement>(null);
-	const [bgColor, setBgColor] = useState<boolean>(false);
-	const [logoutAnchor, setLogoutAnchor] = React.useState<null | HTMLElement>(null);
+	const [lang, setLang] = useState<string | null>('uz');
+	const [isScrolled, setIsScrolled] = useState(false);
+	const [logoutAnchor, setLogoutAnchor] = useState<null | HTMLElement>(null);
 	const logoutOpen = Boolean(logoutAnchor);
+	const [anchorEl3, setAnchorEl3] = useState<null | HTMLElement>(null);
+	const [notifications, setNotifications] = useState<Notification[]>([]);
+	const [notificationCount, setNotificationCount] = useState<number>(0);
+	const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+	const openNotifications = Boolean(anchorEl3);
 
-	const [anchorEl3, setAnchorEl3] = React.useState<any | HTMLElement>(null);
-
-	const [notifications, setNotifications] = React.useState<Notification[]>([]);
-	const [notificationCount, setNotificationCount] = React.useState<number>(0);
-	let openNotifications = Boolean(anchorEl3);
-
-	// Apollo requests
 	const [updateNotification] = useMutation(UPDATE_NOTIFICATION);
 	const notificationsList = useReactiveVar(notificationsVar);
 
-	/** LIFECYCLES **/
 	useEffect(() => {
-		// @ts-ignore
 		setNotifications(notificationsList?.list ?? []);
-		setNotificationCount(notificationsList?.metaCounter[0]?.total ?? 0);
-		if (localStorage.getItem('locale') === null) {
-			localStorage.setItem('locale', 'en');
-			setLang('en');
+		setNotificationCount(notificationsList?.metaCounter?.[0]?.total ?? 0);
+		const stored = localStorage.getItem('locale');
+		if (!stored) {
+			localStorage.setItem('locale', 'uz');
+			setLang('uz');
 		} else {
-			setLang(localStorage.getItem('locale'));
+			setLang(stored === 'kr' ? 'uz' : stored);
 		}
 	}, [router, notificationsList, user]);
-
-	useEffect(() => {
-		switch (router.pathname) {
-			case '/property/detail':
-				setBgColor(true);
-				break;
-			default:
-				break;
-		}
-	}, [router]);
 
 	useEffect(() => {
 		const jwt = getJwtToken();
 		if (jwt) updateUserInfo(jwt);
 	}, []);
 
-	/** HANDLERS **/
+	useEffect(() => {
+		const handleScroll = () => setIsScrolled(window.scrollY > 10);
+		handleScroll();
+		window.addEventListener('scroll', handleScroll);
+		return () => window.removeEventListener('scroll', handleScroll);
+	}, []);
 
 	const updateNotificationHandler = async (user: any, notificationId: any) => {
 		try {
 			if (!notificationId) return;
 			if (!user._id) throw new Error(Messages.error2);
-			await updateNotification({
-				variables: { input: notificationId },
-			});
+			await updateNotification({ variables: { input: notificationId } });
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
-			console.log('ERROR, updateNotificationHandler', err);
 			sweetMixinErrorAlert(err.message).then();
 		}
 	};
 
-	const langClick = (e: any) => {
-		setAnchorEl2(e.currentTarget);
-	};
-
-	const notClick = (e: any) => {
-		setAnchorEl3(e.currentTarget);
-	};
-	const notClose = () => {
-		setAnchorEl3(null);
-	};
-	const langClose = () => {
-		setAnchorEl2(null);
-	};
-
 	const langChoice = useCallback(
-		async (e: any) => {
-			setLang(e.target.id);
-			localStorage.setItem('locale', e.target.id);
-			setAnchorEl2(null);
-			await router.push(router.asPath, router.asPath, { locale: e.target.id });
+		async (localeId: string) => {
+			setLang(localeId);
+			localStorage.setItem('locale', localeId);
+			await router.push(router.asPath, router.asPath, { locale: localeId });
 		},
 		[router],
 	);
 
-	const changeNavbarColor = () => {
-		if (window.scrollY >= 50) {
-			setColorChange(true);
-		} else {
-			setColorChange(false);
-		}
-	};
-
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
-
-	const handleHover = (event: any) => {
-		if (anchorEl !== event.currentTarget) {
-			setAnchorEl(event.currentTarget);
-		} else {
-			setAnchorEl(null);
-		}
-	};
-
 	const StyledMenu = styled((props: MenuProps) => (
 		<Menu
 			elevation={0}
-			anchorOrigin={{
-				vertical: 'bottom',
-				horizontal: 'right',
-			}}
-			transformOrigin={{
-				vertical: 'top',
-				horizontal: 'right',
-			}}
+			anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+			transformOrigin={{ vertical: 'top', horizontal: 'right' }}
 			{...props}
 		/>
 	))(({ theme }) => ({
 		'& .MuiPaper-root': {
-			top: '109px',
+			top: '72px !important',
 			borderRadius: 6,
 			marginTop: theme.spacing(1),
 			minWidth: 160,
 			color: theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
-			boxShadow:
-				'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
-			'& .MuiMenu-list': {
-				padding: '4px 0',
-			},
+			boxShadow: '0 4px 16px rgba(0,0,0,0.09)',
+			'& .MuiMenu-list': { padding: '4px 0' },
 			'& .MuiMenuItem-root': {
-				'& .MuiSvgIcon-root': {
-					fontSize: 18,
-					color: theme.palette.text.secondary,
-					marginRight: theme.spacing(1.5),
-				},
-				'&:active': {
-					backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
-				},
+				'& .MuiSvgIcon-root': { fontSize: 18, marginRight: theme.spacing(1.5) },
+				'&:active': { backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity) },
 			},
 		},
 	}));
 
-	if (typeof window !== 'undefined') {
-		window.addEventListener('scroll', changeNavbarColor);
-	}
+	const navLinks = [
+		{ href: '/', label: t('Home'), match: (p: string) => p === '/' },
+		{ href: '/property', label: t('Properties'), match: (p: string) => p === '/property' || p.startsWith('/property/') },
+		{ href: '/agent', label: t('Agents'), match: (p: string) => p === '/agent' },
+		{ href: '/community?articleCategory=FREE', label: t('Community'), match: (p: string) => p.startsWith('/community') },
+		...(user?._id ? [{ href: '/mypage', label: t('My Page'), match: (p: string) => p === '/mypage' }] : []),
+		{ href: '/cs', label: t('CS'), match: (p: string) => p === '/cs' },
+	];
 
-	if (device == 'mobile') {
-		return (
-			<Stack className={'top'}>
-				<Link href={'/'}>
-					<div className={router.pathname === '/' ? 'active' : ''}>{t('Home')}</div>
-				</Link>
-				<Link href={'/property'}>
-					<div className={router.pathname === '/property' ? 'active' : ''}>{t('Properties')}</div>
-				</Link>
-				<Link href={'/agent'}>
-					<div className="active"> {t('Agents')} </div>
-				</Link>
-				<Link href={'/community?articleCategory=FREE'}>
-					<div> {t('Community')} </div>
-				</Link>
-				<Link href={'/cs'}>
-					<div> {t('CS')} </div>
-				</Link>
-			</Stack>
-		);
-	} else {
-		return (
-			<Stack className={'navbar'}>
-				<Stack className={`navbar-main ${colorChange ? 'transparent' : ''} ${bgColor ? 'transparent' : ''}`}>
-					<Stack className={'container'}>
-						<Box component={'div'} className={'logo-box'}>
-							<Link href={'/'}>
-								<img src="/img/logo/logoWhite.svg" alt="" />
+	const closeMobileDrawer = () => setMobileDrawerOpen(false);
+
+	return (
+		<Stack className="navbar">
+			<Stack className={`navbar-main ${isScrolled ? 'scrolled' : ''}`}>
+				<Stack className="navbar-container">
+					<Link href="/" className="logo-box" onClick={closeMobileDrawer}>
+						<span className="logo-text">Ijaraly</span>
+						<span className="logo-accent" />
+					</Link>
+					<Box className="nav-links">
+						{navLinks.map((link) => (
+							<Link key={link.href} href={link.href} className={link.match(router.pathname) ? 'active' : ''}>
+								{link.label}
 							</Link>
-						</Box>
-						<Box component={'div'} className={'router-box'}>
-							<Link href={'/'}>
-								<div className={router.pathname === '/' ? 'active' : ''}>{t('Home')}</div>
-							</Link>
-							<Link href={'/property'}>
-								<div
-									className={router.pathname === '/property' || router.pathname === '/property/detail' ? 'active' : ''}
+						))}
+					</Box>
+					<button
+						type="button"
+						className="hamburger-btn"
+						onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
+						aria-label="Toggle menu"
+					>
+						{mobileDrawerOpen ? <CloseIcon /> : <MenuIcon />}
+					</button>
+					<Box className="actions-box">
+						<div className="lang-pill">
+							{['uz', 'ru', 'en'].map((localeId) => (
+								<button
+									key={localeId}
+									type="button"
+									className={`lang-pill-item ${lang === localeId ? 'active' : ''}`}
+									onClick={() => langChoice(localeId)}
 								>
-									{t('Properties')}
+									{localeId === 'uz' ? 'UZ' : localeId === 'ru' ? 'RU' : 'EN'}
+								</button>
+							))}
+						</div>
+						{user?._id ? (
+							<>
+								<div className="login-user" onClick={(e: any) => setLogoutAnchor(e.currentTarget)} role="button" tabIndex={0}>
+									<Image
+									src={user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'}
+									alt=""
+									width={40}
+									height={40}
+									style={{ objectFit: 'cover', borderRadius: '50%', display: 'block' }}
+									unoptimized={!user?.memberImage}
+								/>
 								</div>
-							</Link>
-							<Link href={'/agent'}>
-								<div className={router.pathname === '/agent' ? 'active' : ''}>{t('Agents')}</div>
-							</Link>
-							<Link href={'/community?articleCategory=FREE'}>
-								<div className={router.pathname === '/community' ? 'active' : ''}>{t('Community')}</div>
-							</Link>
-							{user?._id && (
-								<Link href={'/mypage'}>
-									<div className={router.pathname === '/mypage' ? 'active' : ''}>{t('My Page')}</div>
-								</Link>
-							)}
-							<Link href={'/cs'}>
-								<div className={router.pathname === '/cs' ? 'active' : ''}>{t('CS')}</div>
-							</Link>
-						</Box>
-						<Box component={'div'} className={'user-box'}>
-							{user?._id ? (
-								<>
-									<div className={'login-user'} onClick={(event: any) => setLogoutAnchor(event.currentTarget)}>
-										<img
-											src={
-												user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'
-											}
-											alt=""
-										/>
-									</div>
-
-									<Menu
-										id="basic-menu"
-										anchorEl={logoutAnchor}
-										open={logoutOpen}
-										onClose={() => {
-											setLogoutAnchor(null);
-										}}
-										sx={{ mt: '5px' }}
-									>
-										<MenuItem onClick={() => logOut()}>
-											<Logout fontSize="small" style={{ color: 'blue', marginRight: '10px' }} />
-											Logout
-										</MenuItem>
-									</Menu>
-								</>
-							) : (
-								<Link href={'/account/join'}>
-									<div className={'join-box'}>
-										<AccountCircleOutlinedIcon />
-										<span>
-											{t('Login')} / {t('Register')}
-										</span>
-									</div>
-								</Link>
-							)}
-
-							<div id="notifications" className={'lan-box'}>
-								{user?._id && (
-									<Button
-										disableRipple
-										className="btn-lang"
-										onClick={notClick}
-										style={{ marginRight: '20px', background: 'none' }}
-									>
-										<NotificationsOutlinedIcon className={'notification-icon'} />
-										<RippleBadge
-											style={{
-												margin: '-18px 0 0 0',
-												transform: 'scale(0.65)',
-											}}
-											badgeContent={notificationCount}
-										/>
-									</Button>
-								)}
-
-								<StyledMenu
-									anchorEl={anchorEl3}
-									open={openNotifications}
-									onClose={notClose}
-									sx={{
-										position: 'absolute',
-										left: 10,
-										top: 0,
-										maxHeight: '400px',
-										overflow: 'hidden',
-									}}
-								>
-									{notifications?.length > 0 ? (
-										notifications.map((notification) => (
-											<MenuItem
-												disableRipple
-												onClick={() =>
-													//@ts-ignore
-													updateNotificationHandler(user, notification._id)
-												}
-												sx={{
-													width: '200px',
-													display: 'flex',
-													flexDirection: 'column',
-													alignItems: 'flex-start',
-													background: '#ececec',
-													borderRadius: '5px',
-													boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)',
-													margin: '0px 10px 10px 10px',
-													overflow: 'hidden',
-													'&:hover': { background: '#f2f2f2' },
-												}}
-											>
-												<Typography
-													sx={{
-														fontSize: '14px',
-														fontWeight: 500,
-														fontFamily: 'sans-serif',
-														color: '#000',
-													}}
-												>
-													{
-														// @ts-ignore
-														notification.notificationTitle
-													}
-												</Typography>
-												<p
-													style={{
-														fontSize: '10px',
-														fontWeight: 400,
-														fontFamily: 'sans-serif',
-														color: '#999',
-													}}
-												>
-													{
-														// @ts-ignore
-														notification.notificationDesc
-													}
-												</p>
-											</MenuItem>
-										))
-									) : (
-										<MenuItem
-											disableRipple
-											onClick={notClose}
-											id="en"
-											sx={{
-												width: '200px',
-												display: 'flex',
-												flexDirection: 'column',
-												background: '#ececec',
-												borderRadius: '5px',
-												boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)',
-												overflow: 'hidden',
-												'&:hover': { background: '#f2f2f2' },
-											}}
-										>
-											<Typography
-												sx={{
-													fontSize: '18px',
-													fontWeight: 500,
-													fontFamily: 'sans-serif',
-													color: '#000',
-												}}
-											>
-												No Notifications Yet
-											</Typography>
-										</MenuItem>
-									)}
-								</StyledMenu>
-
-								<Button
-									disableRipple
-									className="btn-lang"
-									onClick={langClick}
-									endIcon={<CaretDown size={14} color="#616161" weight="fill" />}
-								>
-									<Box component={'div'} className={'flag'}>
-										{lang !== null ? (
-											<img src={`/img/flag/lang${lang}.png`} alt={'usaFlag'} />
-										) : (
-											<img src={`/img/flag/langen.png`} alt={'usaFlag'} />
-										)}
-									</Box>
-								</Button>
-								<StyledMenu anchorEl={anchorEl2} open={drop} onClose={langClose} sx={{ position: 'absolute' }}>
-									<MenuItem disableRipple onClick={langChoice} id="en">
-										<img
-											className="img-flag"
-											src={'/img/flag/langen.png'}
-											onClick={langChoice}
-											id="en"
-											alt={'usaFlag'}
-										/>
-										{t('English')}
+								<Menu anchorEl={logoutAnchor} open={logoutOpen} onClose={() => setLogoutAnchor(null)} sx={{ mt: '5px' }}>
+									<MenuItem onClick={() => logOut()}>
+										<Logout fontSize="small" sx={{ mr: 1 }} />
+										Logout
 									</MenuItem>
-									<MenuItem disableRipple onClick={langChoice} id="kr">
-										<img
-											className="img-flag"
-											src={'/img/flag/langkr.png'}
-											onClick={langChoice}
-											id="uz"
-											alt={'koreanFlag'}
-										/>
-										{t('Korean')}
-									</MenuItem>
-									<MenuItem disableRipple onClick={langChoice} id="ru">
-										<img
-											className="img-flag"
-											src={'/img/flag/langru.png'}
-											onClick={langChoice}
-											id="ru"
-											alt={'russiaFlag'}
-										/>
-										{t('Russian')}
-									</MenuItem>
-								</StyledMenu>
-							</div>
-						</Box>
-					</Stack>
+								</Menu>
+							</>
+						) : (
+							<Link href="/account/join">
+								<button type="button" className="btn-login">
+									{t('Login')}
+								</button>
+							</Link>
+						)}
+						{user?._id && (
+							<Button disableRipple className="btn-notification" onClick={(e) => setAnchorEl3(e.currentTarget)}>
+								<RippleBadge badgeContent={notificationCount} style={{ transform: 'scale(0.65)', margin: '-18px 0 0 0' }}>
+									<NotificationsOutlinedIcon className="notification-icon" />
+								</RippleBadge>
+							</Button>
+						)}
+						<Link href="/mypage?category=addProperty">
+							<button type="button" className="btn-post-listing">
+								{t('Post listing')}
+							</button>
+						</Link>
+					</Box>
 				</Stack>
 			</Stack>
-		);
-	}
+			<Stack className={`mobile-drawer ${mobileDrawerOpen ? 'open' : ''}`} onClick={closeMobileDrawer}>
+				<Stack className="mobile-drawer-content" onClick={(e) => e.stopPropagation()}>
+					<Stack className="mobile-nav-links">
+						{navLinks.map((link) => (
+							<Link key={link.href} href={link.href} className={link.match(router.pathname) ? 'active' : ''} onClick={closeMobileDrawer}>
+								{link.label}
+							</Link>
+						))}
+					</Stack>
+					<Stack className="mobile-actions">
+						<Link href="/account/join" onClick={closeMobileDrawer}>
+							<button type="button" className="btn-login">
+								{t('Login')}
+							</button>
+						</Link>
+						<Link href="/mypage?category=addProperty" onClick={closeMobileDrawer}>
+							<button type="button" className="btn-post-listing">
+								{t('Post listing')}
+							</button>
+						</Link>
+					</Stack>
+					<div className="mobile-lang-toggle">
+						{['uz', 'ru', 'en'].map((localeId) => (
+							<button
+								key={localeId}
+								type="button"
+								className={`lang-pill-item ${lang === localeId ? 'active' : ''}`}
+								onClick={() => langChoice(localeId)}
+							>
+								{localeId === 'uz' ? 'UZ' : localeId === 'ru' ? 'RU' : 'EN'}
+							</button>
+						))}
+					</div>
+				</Stack>
+			</Stack>
+			<StyledMenu anchorEl={anchorEl3} open={openNotifications} onClose={() => setAnchorEl3(null)} sx={{ position: 'absolute' }}>
+				{notifications?.length > 0 ? (
+					notifications.map((n: any) => (
+						<MenuItem key={n._id} disableRipple onClick={() => updateNotificationHandler(user, n._id)} className="notification-item">
+							<Typography variant="body2" fontWeight={500}>{n.notificationTitle}</Typography>
+							<p className="notification-desc">{n.notificationDesc}</p>
+						</MenuItem>
+					))
+				) : (
+					<MenuItem disableRipple onClick={() => setAnchorEl3(null)}>
+						<Typography>No Notifications Yet</Typography>
+					</MenuItem>
+				)}
+			</StyledMenu>
+		</Stack>
+	);
 };
 
 export default withRouter(Top);

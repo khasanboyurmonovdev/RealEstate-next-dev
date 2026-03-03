@@ -5,6 +5,18 @@ export const formatterStr = (value: number | undefined): string => {
 	return numeral(value).format('0,0') != '0' ? numeral(value).format('0,0') : '';
 };
 
+export const formatUZS = (price: number): string => {
+	if (!price) return "0 so'm";
+	return new Intl.NumberFormat('uz-UZ').format(price) + " so'm";
+};
+
+export const formatUZSShort = (price: number): string => {
+	if (!price) return '0';
+	if (price >= 1000000) return (price / 1000000).toFixed(1) + " mln so'm";
+	if (price >= 1000) return (price / 1000).toFixed(0) + " ming so'm";
+	return price + " so'm";
+};
+
 export const likeTargetPropertyHandler = async (likeTargetProperty: any, id: string) => {
 	try {
 		await likeTargetProperty({

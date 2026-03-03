@@ -1,15 +1,9 @@
-import { useEffect, useState } from 'react';
+// Phase 4 Task 9a — Rewritten to read from DeviceContext (SSR-safe)
+import { useContext } from 'react';
+import { DeviceContext } from '../context/DeviceContext';
 
 const useDeviceDetect = (): string => {
-	const [device, setDevice] = useState('desktop');
-
-	useEffect(() => {
-		const userAgent = navigator.userAgent;
-		const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
-		setDevice(isMobile ? 'mobile' : 'desktop');
-	}, [device]);
-
-	return device;
+	return useContext(DeviceContext);
 };
 
 export default useDeviceDetect;

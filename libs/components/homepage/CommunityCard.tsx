@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Box } from '@mui/material';
@@ -37,8 +39,15 @@ const CommunityCard = (props: CommunityCardProps) => {
 			return (
 				<>
 					<Link href={`/community/detail?articleCategory=${article?.articleCategory}&id=${article?._id}`}>
-						<Box component={'div'} className="horizontal-card">
-							<img src={articleImage} alt="" />
+					<Box component={'div'} className="horizontal-card">
+						<Image
+							src={articleImage}
+							alt={article?.articleTitle ?? ''}
+							width={120}
+							height={80}
+							style={{ objectFit: 'cover', borderRadius: 8, flexShrink: 0 }}
+							unoptimized={articleImage.endsWith('.svg')}
+						/>
 							<div>
 								<strong>{article.articleTitle}</strong>
 								<span>

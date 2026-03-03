@@ -22,8 +22,17 @@ span,
 p {
 	line-height: 1.2;
 }
+
 body {
-	font-family: $font;
+	font-family: $font-primary;
+	font-size: $font-size-base;
+	font-weight: $font-weight-regular;
+	line-height: $line-height-normal;
+	color: $color-gray-900;
+	background-color: $color-white;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
 	&::-webkit-scrollbar {
 		width: 9px;
 	}
@@ -40,6 +49,18 @@ body {
 		box-shadow: none;
 	}
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: $font-primary;
+	font-weight: $font-weight-bold;
+	line-height: $line-height-tight;
+}
+
 hr {
 	border-width: 0;
 	border-bottom-width: thin;

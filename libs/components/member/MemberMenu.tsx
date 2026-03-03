@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Stack, Typography, Box, List, ListItem, Button } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
@@ -44,16 +46,20 @@ const MemberMenu = (props: MemberMenuProps) => {
 		return (
 			<Stack width={'100%'} padding={'30px 24px'}>
 				<Stack className={'profile'}>
-					<Box component={'div'} className={'profile-img'}>
-						<img
-							src={member?.memberImage ? `${REACT_APP_API_URL}/${member?.memberImage}` : '/img/profile/defaultUser.svg'}
-							alt={'member-photo'}
-						/>
-					</Box>
-					<Stack className={'user-info'}>
-						<Typography className={'user-name'}>{member?.memberNick}</Typography>
-						<Box component={'div'} className={'user-phone'}>
-							<img src={'/img/icons/call.svg'} alt={'icon'} />
+				<Box component={'div'} className={'profile-img'} style={{ position: 'relative', overflow: 'hidden' }}>
+					<Image
+						src={member?.memberImage ? `${REACT_APP_API_URL}/${member?.memberImage}` : '/img/profile/defaultUser.svg'}
+						alt={'member-photo'}
+						fill
+						sizes="128px"
+						style={{ objectFit: 'cover' }}
+						unoptimized={!member?.memberImage}
+					/>
+				</Box>
+				<Stack className={'user-info'}>
+					<Typography className={'user-name'}>{member?.memberNick}</Typography>
+					<Box component={'div'} className={'user-phone'}>
+						<Image src={'/img/icons/call.svg'} alt={'icon'} width={16} height={16} unoptimized />
 							<Typography className={'p-number'}>{member?.memberPhone}</Typography>
 						</Box>
 						<Typography className={'view-list'}>{member?.memberType}</Typography>
@@ -98,11 +104,11 @@ const MemberMenu = (props: MemberMenuProps) => {
 										style={{ width: '100%' }}
 									>
 										<div className={'flex-box'}>
-											{category === 'properties' ? (
-												<img className={'com-icon'} src={'/img/icons/homeWhite.svg'} alt={'com-icon'} />
-											) : (
-												<img className={'com-icon'} src={'/img/icons/home.svg'} alt={'com-icon'} />
-											)}
+									{category === 'properties' ? (
+											<Image className={'com-icon'} src={'/img/icons/homeWhite.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
+										) : (
+											<Image className={'com-icon'} src={'/img/icons/home.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
+										)}
 											<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 												Properties
 											</Typography>
@@ -233,10 +239,10 @@ const MemberMenu = (props: MemberMenuProps) => {
 										style={{ width: '100%' }}
 									>
 										<div className={'flex-box'}>
-											{category === 'articles' ? (
-												<img className={'com-icon'} src={'/img/icons/discoveryWhite.svg'} alt={'com-icon'} />
-											) : (
-												<img className={'com-icon'} src={'/img/icons/discovery.svg'} alt={'com-icon'} />
+									{category === 'articles' ? (
+											<Image className={'com-icon'} src={'/img/icons/discoveryWhite.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
+										) : (
+											<Image className={'com-icon'} src={'/img/icons/discovery.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
 											)}
 
 											<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>

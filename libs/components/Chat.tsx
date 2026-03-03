@@ -67,33 +67,41 @@ const Chat = () => {
 	/** LIFECYCLES **/
 
 	useEffect(() => {
+		if (!socket) return;
+
 		socket.onmessage = (msg) => {
 			const data = JSON.parse(msg.data);
 			console.log('websocket message:', data);
 			switch (data.event) {
-				case 'info':
+				case 'info': {
 					const newInfo: InfoPayload = data;
 					setOnlineUsers(newInfo.totalClients);
 					break;
-				case 'getMessages':
+				}
+				case 'getMessages': {
 					const list: MessagePayload[] = data.list;
 					setMessagesList(list);
 					console.log('getMessages event');
 					break;
-				case 'message':
+				}
+				case 'message': {
 					const newMessage: MessagePayload = data;
-					messagesList.push(newMessage);
-					setMessagesList([...messagesList]);
+					setMessagesList((prev) => [...prev, newMessage]);
 					break;
+				}
 				case 'notifications':
-					notificationsVar(data.notifications);
+					notificationsVar(data.notifications as Notifications[]);
 					break;
 				default:
 					break;
 			}
 		};
 		console.log('Chat is rendered!');
-	}, [socket, messagesList, onlineUsers]);
+
+		return () => {
+			socket.onmessage = null;
+		};
+	}, [socket]);
 
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
@@ -130,11 +138,16 @@ const Chat = () => {
 	};
 
 	const onClickHandler = () => {
-		if (!messageInput) sweetErrorAlert(Messages.error4);
-		else {
-			socket.send(JSON.stringify({ event: 'message', data: messageInput }));
-			setMessageInput('');
+		if (!messageInput) {
+			sweetErrorAlert(Messages.error4);
+			return;
 		}
+		if (!socket) {
+			sweetErrorAlert('Chat connection is not ready. Please try again in a moment.');
+			return;
+		}
+		socket.send(JSON.stringify({ event: 'message', data: messageInput }));
+		setMessageInput('');
 	};
 
 	return (

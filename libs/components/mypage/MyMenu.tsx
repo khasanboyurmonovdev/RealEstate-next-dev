@@ -1,4 +1,7 @@
+// Phase 4 Task 6 — Mobile polish
+// Phase 4 Task 8 — next/image migration
 import React from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Stack, Typography, Box, List, ListItem } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
@@ -27,22 +30,54 @@ const MyMenu = () => {
 		}
 	};
 
+	const menuItems = [
+		{ key: 'myProfile', label: 'My Profile', icon: 'user', iconWhite: 'userWhite' },
+		{ key: 'myProperties', label: 'My Properties', icon: 'home', iconWhite: 'homeWhite' },
+		{ key: 'myFavorites', label: 'My Favorites', icon: 'like', iconWhite: 'likeWhite' },
+		{ key: 'addProperty', label: 'Add Property', icon: 'newTab', iconWhite: 'whiteTab' },
+		{ key: 'recentlyVisited', label: 'Recently Visited', icon: 'search', iconWhite: 'searchWhite' },
+	];
+
 	if (device === 'mobile') {
-		return <div>MY MENU</div>;
+		return (
+			<div className="my-menu-mobile">
+				<div className="my-menu-mobile-scroll">
+					{menuItems.map((item) => {
+						const isActive = category === item.key;
+						const iconName = isActive ? item.iconWhite : item.icon;
+						return (
+							<Link
+								key={item.key}
+								href={{ pathname: '/mypage', query: { category: item.key } }}
+								scroll={false}
+								className={`my-menu-mobile-tab ${isActive ? 'active' : ''}`}
+							>
+								<Image src={`/img/icons/${iconName}.svg`} alt="" width={20} height={20} unoptimized />
+								<span>{item.label}</span>
+							</Link>
+						);
+					})}
+				</div>
+			</div>
+		);
 	} else {
 		return (
 			<Stack width={'100%'} padding={'30px 24px'}>
 				<Stack className={'profile'}>
-					<Box component={'div'} className={'profile-img'}>
-						<img
-							src={user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'}
-							alt={'member-photo'}
-						/>
-					</Box>
-					<Stack className={'user-info'}>
-						<Typography className={'user-name'}>{user?.memberNick}</Typography>
-						<Box component={'div'} className={'user-phone'}>
-							<img src={'/img/icons/call.svg'} alt={'icon'} />
+				<Box component={'div'} className={'profile-img'} style={{ position: 'relative', overflow: 'hidden' }}>
+					<Image
+						src={user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'}
+						alt={'member-photo'}
+						fill
+						sizes="96px"
+						style={{ objectFit: 'cover' }}
+						unoptimized={!user?.memberImage}
+					/>
+				</Box>
+				<Stack className={'user-info'}>
+					<Typography className={'user-name'}>{user?.memberNick}</Typography>
+					<Box component={'div'} className={'user-phone'}>
+						<Image src={'/img/icons/call.svg'} alt={'icon'} width={16} height={16} unoptimized />
 							<Typography className={'p-number'}>{user?.memberPhone}</Typography>
 						</Box>
 						{user?.memberType === 'ADMIN' ? (
@@ -55,61 +90,57 @@ const MyMenu = () => {
 					</Stack>
 				</Stack>
 				<Stack className={'sections'}>
-					<Stack className={'section'} style={{ height: user.memberType === 'AGENT' ? '228px' : '153px' }}>
+					<Stack className={'section'} style={{ minHeight: '228px' }}>
 						<Typography className="title" variant={'h5'}>
 							MANAGE LISTINGS
 						</Typography>
 						<List className={'sub-section'}>
-							{user.memberType === 'AGENT' && (
-								<>
-									<ListItem className={pathname === 'addProperty' ? 'focus' : ''}>
-										<Link
-											href={{
-												pathname: '/mypage',
-												query: { category: 'addProperty' },
-											}}
-											scroll={false}
-										>
-											<div className={'flex-box'}>
-												{category === 'addProperty' ? (
-													<img className={'com-icon'} src={'/img/icons/whiteTab.svg'} alt={'com-icon'} />
-												) : (
-													<img className={'com-icon'} src={'/img/icons/newTab.svg'} alt={'com_icon'} />
-												)}
-												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-													Add Property
-												</Typography>
-												<IconButton aria-label="delete" sx={{ ml: '40px' }}>
-													<PortraitIcon style={{ color: 'red' }} />
-												</IconButton>
-											</div>
-										</Link>
-									</ListItem>
-									<ListItem className={pathname === 'myProperties' ? 'focus' : ''}>
-										<Link
-											href={{
-												pathname: '/mypage',
-												query: { category: 'myProperties' },
-											}}
-											scroll={false}
-										>
-											<div className={'flex-box'}>
-												{category === 'myProperties' ? (
-													<img className={'com-icon'} src={'/img/icons/homeWhite.svg'} alt={'com-icon'} />
-												) : (
-													<img className={'com-icon'} src={'/img/icons/home.svg'} alt={'com-icon'} />
-												)}
-												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-													My Properties
-												</Typography>
-												<IconButton aria-label="delete" sx={{ ml: '36px' }}>
-													<PortraitIcon style={{ color: 'red' }} />
-												</IconButton>
-											</div>
-										</Link>
-									</ListItem>
-								</>
-							)}
+							<ListItem className={pathname === 'addProperty' ? 'focus' : ''}>
+								<Link
+									href={{
+										pathname: '/mypage',
+										query: { category: 'addProperty' },
+									}}
+									scroll={false}
+								>
+									<div className={'flex-box'}>
+										{category === 'addProperty' ? (
+											<Image className={'com-icon'} src={'/img/icons/whiteTab.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
+										) : (
+											<Image className={'com-icon'} src={'/img/icons/newTab.svg'} alt={'com_icon'} width={20} height={20} unoptimized />
+										)}
+										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+											Add Property
+										</Typography>
+										<IconButton aria-label="delete" sx={{ ml: '40px' }}>
+											<PortraitIcon style={{ color: 'red' }} />
+										</IconButton>
+									</div>
+								</Link>
+							</ListItem>
+							<ListItem className={pathname === 'myProperties' ? 'focus' : ''}>
+								<Link
+									href={{
+										pathname: '/mypage',
+										query: { category: 'myProperties' },
+									}}
+									scroll={false}
+								>
+									<div className={'flex-box'}>
+										{category === 'myProperties' ? (
+											<Image className={'com-icon'} src={'/img/icons/homeWhite.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
+										) : (
+											<Image className={'com-icon'} src={'/img/icons/home.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
+										)}
+										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+											My Properties
+										</Typography>
+										<IconButton aria-label="delete" sx={{ ml: '36px' }}>
+											<PortraitIcon style={{ color: 'red' }} />
+										</IconButton>
+									</div>
+								</Link>
+							</ListItem>
 							<ListItem className={pathname === 'myFavorites' ? 'focus' : ''}>
 								<Link
 									href={{
@@ -120,9 +151,9 @@ const MyMenu = () => {
 								>
 									<div className={'flex-box'}>
 										{category === 'myFavorites' ? (
-											<img className={'com-icon'} src={'/img/icons/likeWhite.svg'} alt={'com-icon'} />
+											<Image className={'com-icon'} src={'/img/icons/likeWhite.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
 										) : (
-											<img className={'com-icon'} src={'/img/icons/like.svg'} alt={'com-icon'} />
+											<Image className={'com-icon'} src={'/img/icons/like.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
 										)}
 
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
@@ -141,9 +172,9 @@ const MyMenu = () => {
 								>
 									<div className={'flex-box'}>
 										{category === 'recentlyVisited' ? (
-											<img className={'com-icon'} src={'/img/icons/searchWhite.svg'} alt={'com-icon'} />
+											<Image className={'com-icon'} src={'/img/icons/searchWhite.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
 										) : (
-											<img className={'com-icon'} src={'/img/icons/search.svg'} alt={'com-icon'} />
+											<Image className={'com-icon'} src={'/img/icons/search.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
 										)}
 
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
@@ -265,9 +296,9 @@ const MyMenu = () => {
 									>
 										<div className={'flex-box'}>
 											{category === 'myArticles' ? (
-												<img className={'com-icon'} src={'/img/icons/discoveryWhite.svg'} alt={'com-icon'} />
+												<Image className={'com-icon'} src={'/img/icons/discoveryWhite.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
 											) : (
-												<img className={'com-icon'} src={'/img/icons/discovery.svg'} alt={'com-icon'} />
+												<Image className={'com-icon'} src={'/img/icons/discovery.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
 											)}
 
 											<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
@@ -286,9 +317,9 @@ const MyMenu = () => {
 									>
 										<div className={'flex-box'}>
 											{category === 'writeArticle' ? (
-												<img className={'com-icon'} src={'/img/icons/whiteTab.svg'} alt={'com-icon'} />
-											) : (
-												<img className={'com-icon'} src={'/img/icons/newTab.svg'} alt={'com_icon'} />
+											<Image className={'com-icon'} src={'/img/icons/whiteTab.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
+												) : (
+													<Image className={'com-icon'} src={'/img/icons/newTab.svg'} alt={'com_icon'} width={20} height={20} unoptimized />
 											)}
 											<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 												Write Article
@@ -314,9 +345,9 @@ const MyMenu = () => {
 								>
 									<div className={'flex-box'}>
 										{category === 'myProfile' ? (
-											<img className={'com-icon'} src={'/img/icons/userWhite.svg'} alt={'com-icon'} />
+											<Image className={'com-icon'} src={'/img/icons/userWhite.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
 										) : (
-											<img className={'com-icon'} src={'/img/icons/user.svg'} alt={'com-icon'} />
+											<Image className={'com-icon'} src={'/img/icons/user.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
 										)}
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 											My Profile
@@ -326,7 +357,7 @@ const MyMenu = () => {
 							</ListItem>
 							<ListItem onClick={logoutHandler}>
 								<div className={'flex-box'}>
-									<img className={'com-icon'} src={'/img/icons/logout.svg'} alt={'com-icon'} />
+									<Image className={'com-icon'} src={'/img/icons/logout.svg'} alt={'com-icon'} width={20} height={20} unoptimized />
 									<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 										Logout
 									</Typography>

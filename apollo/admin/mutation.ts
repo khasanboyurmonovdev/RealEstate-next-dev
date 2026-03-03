@@ -41,25 +41,19 @@ export const UPDATE_PROPERTY_BY_ADMIN = gql`
 	mutation UpdatePropertyByAdmin($input: PropertyUpdate!) {
 		updatePropertyByAdmin(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
 			propertyTitle
 			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
 			propertyDesc
-			propertyBarter
+			propertySquare
 			propertyRent
-			memberId
+			propertyBarter
+			city
+			district
+			images
+			propertyStatus
+			verificationStatus
 			soldAt
 			deletedAt
-			constructedAt
 			createdAt
 			updatedAt
 		}
@@ -67,29 +61,52 @@ export const UPDATE_PROPERTY_BY_ADMIN = gql`
 `;
 
 export const REMOVE_PROPERTY_BY_ADMIN = gql`
-	mutation RemovePropertyByAdmin($input: String!) {
+	mutation RemovePropertyByAdmin($input: ID!) {
 		removePropertyByAdmin(propertyId: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
 			propertyTitle
 			propertyPrice
+			propertyDesc
 			propertySquare
-			propertyBeds
-			propertyRooms
+			propertyRent
+			propertyBarter
+			city
+			district
+			images
+			owner
+			propertyStatus
+			verificationStatus
 			propertyViews
 			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
-			memberId
+			propertyRank
 			soldAt
 			deletedAt
-			constructedAt
 			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const VERIFY_PROPERTY_BY_ADMIN = gql`
+	mutation VerifyPropertyByAdmin($input: ID!) {
+		verifyPropertyByAdmin(propertyId: $input) {
+			_id
+			propertyTitle
+			propertyStatus
+			verificationStatus
+			updatedAt
+		}
+	}
+`;
+
+export const REJECT_PROPERTY_BY_ADMIN = gql`
+	mutation RejectPropertyByAdmin($input: RejectPropertyInput!) {
+		rejectPropertyByAdmin(input: $input) {
+			_id
+			propertyTitle
+			propertyStatus
+			verificationStatus
+			rejectionReason
 			updatedAt
 		}
 	}

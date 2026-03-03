@@ -1,4 +1,6 @@
+// Phase 4 Task 8
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { Stack, Box, Modal, Divider, Button } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -338,11 +340,11 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					</Stack>
 					<Stack className={'search-box-other'}>
 						<Box className={'advanced-filter'} onClick={() => advancedFilterHandler(true)}>
-							<img src="/img/icons/tune.svg" alt="" />
+							<Image src="/img/icons/tune.svg" alt="" width={20} height={20} unoptimized />
 							<span>{t('Advanced')}</span>
 						</Box>
 						<Box className={'search-btn'} onClick={pushSearchHandler}>
-							<img src="/img/icons/search_white.svg" alt="" />
+							<Image src="/img/icons/search_white.svg" alt="" width={20} height={20} unoptimized />
 						</Box>
 					</Stack>
 
@@ -351,7 +353,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						{propertyLocation.map((location: string) => {
 							return (
 								<div onClick={() => propertyLocationSelectHandler(location)} key={location}>
-									<img src={`img/banner/cities/${location}.jpg`} alt="" />
+									<Image src={`/img/banner/cities/${location}.jpg`} alt={location} width={80} height={60} style={{ objectFit: 'cover' }} />
 									<span>{location}</span>
 								</div>
 							);
@@ -399,7 +401,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							<div className={'top'}>
 								<span>Find your home</span>
 								<div className={'search-input-box'}>
-									<img src="/img/icons/search.svg" alt="" />
+									<Image src="/img/icons/search.svg" alt="" width={20} height={20} unoptimized />
 									<input
 										value={searchFilter?.search?.text ?? ''}
 										type="text"
@@ -543,11 +545,11 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							<Divider sx={{ mt: '60px', mb: '18px' }} />
 							<div className={'bottom'}>
 								<div onClick={resetFilterHandler}>
-									<img src="/img/icons/reset.svg" alt="" />
+									<Image src="/img/icons/reset.svg" alt="" width={20} height={20} unoptimized />
 									<span>Reset all filters</span>
 								</div>
 								<Button
-									startIcon={<img src={'/img/icons/search.svg'} />}
+									startIcon={<Image src="/img/icons/search.svg" alt="" width={20} height={20} unoptimized />}
 									className={'search-btn'}
 									onClick={pushSearchHandler}
 								>

@@ -1,4 +1,4 @@
-import { PropertyLocation, PropertyStatus, PropertyType } from '../../enums/property.enum';
+import { PropertyLocation, PropertyStatus, PropertyType, PropertyVerificationStatus } from '../../enums/property.enum';
 import { Member } from '../member/member';
 
 export interface MeLiked {
@@ -28,6 +28,8 @@ export interface Property {
 	propertyRank: number;
 	propertyImages: string[];
 	propertyDesc?: string;
+	verificationStatus?: PropertyVerificationStatus;
+	rejectionReason?: string;
 	propertyBarter: boolean;
 	propertyRent: boolean;
 	memberId: string;

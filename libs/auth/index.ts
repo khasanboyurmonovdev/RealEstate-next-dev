@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import decodeJWT from 'jwt-decode';
 import { initializeApollo } from '../../apollo/client';
 import { userVar } from '../../apollo/store';
@@ -5,14 +6,19 @@ import { CustomJwtPayload } from '../types/customJwtPayload';
 import { sweetMixinErrorAlert } from '../sweetAlert';
 import { LOGIN, SIGN_UP } from '../../apollo/user/mutation';
 
-export function getJwtToken(): any {
+export function getJwtToken(): string {
 	if (typeof window !== 'undefined') {
-		return localStorage.getItem('accessToken') ?? '';
+		return Cookies.get('accessToken') ?? '';
 	}
+	return '';
 }
 
 export function setJwtToken(token: string) {
-	localStorage.setItem('accessToken', token);
+	Cookies.set('accessToken', token, {
+		expires: 30,
+		sameSite: 'strict',
+		secure: process.env.NODE_ENV === 'production',
+	});
 }
 
 export const logIn = async (nick: string, password: string): Promise<void> => {
@@ -121,7 +127,6 @@ const requestSignUpJwtToken = async ({
 
 export const updateStorage = ({ jwtToken }: { jwtToken: any }) => {
 	setJwtToken(jwtToken);
-	window.localStorage.setItem('login', Date.now().toString());
 };
 
 export const updateUserInfo = (jwtToken: any) => {
@@ -160,8 +165,7 @@ export const logOut = () => {
 };
 
 const deleteStorage = () => {
-	localStorage.removeItem('accessToken');
-	window.localStorage.setItem('logout', Date.now().toString());
+	Cookies.remove('accessToken');
 };
 
 const deleteUserInfo = () => {

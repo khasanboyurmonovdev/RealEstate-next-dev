@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Box, Button, Pagination, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
@@ -63,7 +65,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>NESTAR FOLLOWS MOBILE</div>;
+		return <div>IJARALY FOLLOWS MOBILE</div>;
 	} else {
 		return (
 			<div id="member-follows-page">
@@ -79,10 +81,10 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 						<Typography className="title-text">Subscription</Typography>
 					</Stack>
 					{memberFollowers?.length === 0 && (
-						<div className={'no-data'}>
-							<img src="/img/icons/icoAlert.svg" alt="" />
-							<p>No Followers yet!</p>
-						</div>
+					<div className={'no-data'}>
+						<Image src="/img/icons/icoAlert.svg" alt="" width={56} height={56} unoptimized />
+						<p>No Followers yet!</p>
+					</div>
 					)}
 					{memberFollowers.map((follower: Follower) => {
 						const imagePath: string = follower?.followerData?.memberImage
@@ -91,9 +93,16 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 						return (
 							<Stack className="follows-card-box" key={follower._id}>
 								<Stack className={'info'} onClick={() => redirectToMemberPageHandler(follower?.followerData?._id)}>
-									<Stack className="image-box">
-										<img src={imagePath} alt="" />
-									</Stack>
+						<Stack className="image-box">
+									<Image
+										src={imagePath}
+										alt=""
+										width={55}
+										height={55}
+										style={{ objectFit: 'cover', borderRadius: '50%' }}
+										unoptimized={imagePath.endsWith('.svg')}
+									/>
+								</Stack>
 									<Stack className="information-box">
 										<Typography className="name">{follower?.followerData?.memberNick}</Typography>
 									</Stack>

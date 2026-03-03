@@ -1,0 +1,369 @@
+// Phase 4 Task 3 — Ijaraly Hero
+@import '../../../scss/variables.scss';
+
+.hero-homepage {
+	position: relative;
+	width: 100%;
+	min-height: calc(100vh - #{$navbar-height});
+	padding: $space-20 0 $space-16;
+	overflow: hidden;
+	@media (max-width: 1023px) {
+		padding: $space-12 0 $space-10;
+	}
+
+	.hero-blob {
+		position: absolute;
+		border-radius: 50%;
+		pointer-events: none;
+		z-index: 0;
+	}
+	.hero-blob-1 {
+		top: -100px;
+		left: -100px;
+		width: 400px;
+		height: 400px;
+		background: radial-gradient(circle, rgba(18, 70, 230, 0.06) 0%, transparent 70%);
+	}
+	.hero-blob-2 {
+		bottom: 0;
+		left: 200px;
+		width: 300px;
+		height: 300px;
+		background: radial-gradient(circle, rgba(255, 107, 43, 0.05) 0%, transparent 70%);
+	}
+
+	.hero-container {
+		position: relative;
+		z-index: 1;
+		max-width: $container-max-width;
+		margin: 0 auto;
+		padding: 0 $container-padding;
+	}
+
+	.hero-grid {
+		display: grid;
+		grid-template-columns: 55fr 45fr;
+		gap: $space-10;
+		align-items: center;
+		@media (max-width: 1023px) {
+			grid-template-columns: 1fr;
+			text-align: center;
+		}
+	}
+
+	.hero-left {
+		.hero-eyebrow {
+			opacity: 0;
+			animation: heroFadeUp 500ms ease-out 0ms forwards;
+			display: inline-block;
+			background: $color-primary-subtle;
+			color: $color-primary;
+			font-family: $font-secondary;
+			font-size: $font-size-xs;
+			font-weight: $font-weight-semibold;
+			border-radius: $radius-full;
+			padding: $space-2 $space-4;
+			margin-bottom: $space-5;
+		}
+		.hero-headline {
+			opacity: 0;
+			animation: heroFadeUp 500ms ease-out 100ms forwards;
+			font-family: $font-primary;
+			font-weight: $font-weight-extrabold;
+			line-height: $line-height-tight;
+			color: $color-gray-900;
+			margin: 0 0 $space-6;
+			font-size: $font-size-5xl;
+			@media (max-width: 1023px) {
+				font-size: $font-size-4xl;
+			}
+			@media (max-width: 767px) {
+				font-size: $font-size-3xl;
+			}
+			.hero-headline-line {
+				display: block;
+			}
+			.hero-headline-accent {
+				color: $color-accent;
+				position: relative;
+				display: inline-block;
+				&::after {
+					content: '';
+					position: absolute;
+					left: 0;
+					bottom: 2px;
+					right: 0;
+					height: 4px;
+					background: $color-accent;
+					opacity: 0.4;
+					border-radius: 2px;
+				}
+			}
+		}
+		.hero-subheadline {
+			opacity: 0;
+			animation: heroFadeUp 500ms ease-out 200ms forwards;
+			font-family: $font-secondary;
+			font-size: $font-size-md;
+			font-weight: $font-weight-regular;
+			color: $color-gray-500;
+			line-height: $line-height-loose;
+			max-width: 480px;
+			margin: 0 0 $space-8;
+			@media (max-width: 1023px) {
+				max-width: 100%;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		}
+		.hero-search-bar {
+			opacity: 0;
+			animation: heroFadeUp 500ms ease-out 300ms forwards;
+			display: flex;
+			align-items: center;
+			background: $color-white;
+			border: 1px solid $color-gray-200;
+			border-radius: $radius-2xl;
+			box-shadow: $shadow-lg;
+			padding: $space-2 $space-2 $space-2 $space-6;
+			gap: $space-4;
+			flex-wrap: wrap;
+			@media (max-width: 1023px) {
+				flex-direction: column;
+				padding: $space-4;
+				align-items: stretch;
+			}
+			.hero-search-tabs {
+				display: flex;
+				align-items: center;
+				gap: 0;
+				.hero-tab {
+					border: none;
+					background: none;
+					font-family: $font-secondary;
+					font-size: $font-size-sm;
+					color: $color-gray-400;
+					cursor: pointer;
+					padding: $space-2 $space-3;
+					font-weight: $font-weight-regular;
+					transition: color $transition-fast;
+					&.active {
+						color: $color-primary;
+						font-weight: $font-weight-semibold;
+					}
+					&:hover:not(.active) {
+						color: $color-gray-600;
+					}
+				}
+				.hero-tab-divider {
+					width: 1px;
+					height: 20px;
+					background: $color-gray-200;
+				}
+			}
+			.hero-search-divider {
+				width: 1px;
+				height: 20px;
+				background: $color-gray-200;
+				flex-shrink: 0;
+				@media (max-width: 1023px) {
+					width: 100%;
+					height: 1px;
+				}
+			}
+			.hero-location-input-wrap {
+				flex: 1;
+				display: flex;
+				align-items: center;
+				gap: $space-2;
+				min-width: 0;
+				.hero-location-icon {
+					width: 16px;
+					height: 16px;
+					color: $color-primary;
+					flex-shrink: 0;
+				}
+				.hero-location-input {
+					flex: 1;
+					border: none;
+					outline: none;
+					font-family: $font-secondary;
+					font-size: $font-size-sm;
+					color: $color-gray-700;
+					background: none;
+					&::placeholder {
+						color: $color-gray-400;
+					}
+				}
+			}
+			.hero-search-btn {
+				display: flex;
+				align-items: center;
+				gap: $space-2;
+				background: $color-primary;
+				color: $color-white;
+				border: none;
+				border-radius: $radius-xl;
+				padding: 14px $space-6;
+				font-family: $font-primary;
+				font-size: $font-size-sm;
+				font-weight: $font-weight-bold;
+				box-shadow: $shadow-primary;
+				cursor: pointer;
+				transition: background-color $transition-base, transform $transition-base, box-shadow $transition-base;
+				&:hover {
+					background: $color-primary-dark;
+					transform: translateY(-1px);
+					box-shadow: 0 6px 28px rgba(18, 70, 230, 0.35);
+				}
+				@media (max-width: 1023px) {
+					width: 100%;
+					justify-content: center;
+				}
+			}
+		}
+		.hero-stats {
+			opacity: 0;
+			animation: heroFadeUp 500ms ease-out 400ms forwards;
+			display: flex;
+			align-items: center;
+			margin-top: $space-6;
+			gap: $space-4;
+			flex-wrap: wrap;
+			@media (max-width: 1023px) {
+				justify-content: center;
+			}
+			.hero-stat {
+				display: flex;
+				flex-direction: column;
+				gap: 2px;
+				.hero-stat-value {
+					font-family: $font-primary;
+					font-size: $font-size-xl;
+					font-weight: $font-weight-extrabold;
+					color: $color-primary;
+					line-height: $line-height-tight;
+				}
+				.hero-stat-label {
+					font-family: $font-secondary;
+					font-size: $font-size-xs;
+					font-weight: $font-weight-medium;
+					color: $color-gray-500;
+				}
+			}
+			.hero-stat-divider {
+				width: 1px;
+				height: 32px;
+				background: $color-gray-200;
+			}
+		}
+	}
+
+	.hero-right {
+		@media (max-width: 1023px) {
+			display: none;
+		}
+		.hero-visual {
+			opacity: 0;
+			animation: heroFadeInScale 600ms ease-out 200ms forwards;
+			position: relative;
+			overflow: hidden;
+			border-radius: $radius-2xl;
+			box-shadow: $shadow-xl;
+			height: 520px;
+			.hero-visual-gradient {
+				position: absolute;
+				inset: 0;
+				background: linear-gradient(135deg, $color-primary-subtle 0%, $color-primary 100%);
+				object-fit: cover;
+			}
+			.hero-badge {
+				position: absolute;
+				top: $space-6;
+				right: $space-6;
+				background: $color-white;
+				border-radius: $radius-full;
+				padding: $space-2 $space-4;
+				box-shadow: $shadow-md;
+				font-family: $font-secondary;
+				font-size: $font-size-xs;
+				font-weight: $font-weight-semibold;
+				color: $color-gray-700;
+			}
+			.hero-property-card {
+				position: absolute;
+				bottom: $space-6;
+				left: $space-6;
+				background: rgba(255, 255, 255, 0.95);
+				backdrop-filter: blur(8px);
+				border-radius: $radius-lg;
+				padding: $space-4 $space-5;
+				box-shadow: $shadow-lg;
+				min-width: 220px;
+				display: flex;
+				flex-direction: column;
+				gap: $space-2;
+				.hero-card-badge {
+					display: inline-block;
+					width: fit-content;
+					background: $color-accent;
+					color: $color-white;
+					font-size: $font-size-xs;
+					font-weight: $font-weight-semibold;
+					border-radius: $radius-full;
+					padding: 4px $space-3;
+				}
+				.hero-card-title {
+					font-family: $font-primary;
+					font-weight: $font-weight-bold;
+					font-size: $font-size-sm;
+					color: $color-gray-900;
+				}
+				.hero-card-price {
+					font-family: $font-primary;
+					font-weight: $font-weight-extrabold;
+					font-size: $font-size-md;
+					color: $color-primary;
+				}
+				.hero-card-rating {
+					display: flex;
+					align-items: center;
+					gap: $space-1;
+					.hero-stars {
+						color: $color-accent;
+						font-size: 12px;
+						letter-spacing: 2px;
+					}
+					.hero-rating-text {
+						font-family: $font-secondary;
+						font-size: $font-size-xs;
+						font-weight: $font-weight-medium;
+						color: $color-gray-600;
+					}
+				}
+			}
+		}
+	}
+}
+
+@keyframes heroFadeUp {
+	from {
+		opacity: 0;
+		transform: translateY(24px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes heroFadeInScale {
+	from {
+		opacity: 0;
+		transform: scale(0.97);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}

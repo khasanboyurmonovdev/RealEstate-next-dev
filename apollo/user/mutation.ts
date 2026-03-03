@@ -33,6 +33,56 @@ export const SIGN_UP = gql`
 	}
 `;
 
+export const SEND_OTP = gql`
+	mutation SendOtp($input: OtpInput!) {
+		sendOtp(input: $input) {
+			success
+		}
+	}
+`;
+
+export const LOGIN_WITH_OTP = gql`
+	mutation LoginWithOtp($input: OtpLoginInput!) {
+		loginWithOtp(input: $input) {
+			_id
+			memberType
+			memberStatus
+			memberAuthType
+			memberPhone
+			memberNick
+			memberFullName
+			memberImage
+			memberAddress
+			memberDesc
+			memberWarnings
+			memberBlocks
+			memberProperties
+			memberRank
+			memberArticles
+			memberPoints
+			memberLikes
+			memberViews
+			deletedAt
+			createdAt
+			updatedAt
+			accessToken
+		}
+	}
+`;
+
+export const LOGIN_WITH_TELEGRAM = gql`
+	mutation LoginWithTelegram($input: TelegramAuthInput!) {
+		loginWithTelegram(input: $input) {
+			_id
+			memberType
+			memberNick
+			memberImage
+			memberPhone
+			accessToken
+		}
+	}
+`;
+
 export const LOGIN = gql`
 	mutation Login($input: LoginInput!) {
 		login(input: $input) {
@@ -126,25 +176,23 @@ export const CREATE_PROPERTY = gql`
 	mutation CreateProperty($input: PropertyInput!) {
 		createProperty(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
 			propertyTitle
 			propertyPrice
+			propertyDesc
 			propertySquare
-			propertyBeds
-			propertyRooms
+			propertyRent
+			propertyBarter
+			city
+			district
+			images
+			owner
+			propertyStatus
+			verificationStatus
 			propertyViews
 			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
-			memberId
+			propertyRank
 			soldAt
 			deletedAt
-			constructedAt
 			createdAt
 			updatedAt
 		}
@@ -155,25 +203,19 @@ export const UPDATE_PROPERTY = gql`
 	mutation UpdateProperty($input: PropertyUpdate!) {
 		updateProperty(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
 			propertyTitle
 			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
 			propertyDesc
-			propertyBarter
+			propertySquare
 			propertyRent
-			memberId
+			propertyBarter
+			city
+			district
+			images
+			propertyStatus
+			verificationStatus
 			soldAt
 			deletedAt
-			constructedAt
 			createdAt
 			updatedAt
 		}
@@ -181,30 +223,41 @@ export const UPDATE_PROPERTY = gql`
 `;
 
 export const LIKE_TARGET_PROPERTY = gql`
-	mutation LikeTargetProperty($input: String!) {
+	mutation LikeTargetProperty($input: ID!) {
 		likeTargetProperty(propertyId: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
 			propertyTitle
 			propertyPrice
+			propertyDesc
 			propertySquare
-			propertyBeds
-			propertyRooms
+			propertyRent
+			propertyBarter
+			city
+			district
+			images
+			owner
+			propertyStatus
+			verificationStatus
 			propertyViews
 			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
-			memberId
+			propertyRank
 			soldAt
 			deletedAt
-			constructedAt
 			createdAt
 			updatedAt
+		}
+	}
+`;
+
+/**************************
+ *         REPORT         *
+ *************************/
+
+export const CREATE_REPORT = gql`
+	mutation CreateReport($input: CreateReportInput!) {
+		createReport(input: $input) {
+			_id
+			status
 		}
 	}
 `;

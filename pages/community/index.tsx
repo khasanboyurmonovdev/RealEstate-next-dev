@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
@@ -111,9 +113,9 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 						<Stack className="main-box">
 							<Stack className="left-config">
 								<Stack className={'image-info'}>
-									<img src={'/img/logo/propnation2.svg'} />
+									<Image src={'/img/logo/ijaraly2.svg'} alt="Ijaraly" width={100} height={40} unoptimized />
 									<Stack className={'community-name'}>
-										<Typography className={'name'}>PropNation Community</Typography>
+										<Typography className={'name'}>Ijaraly Community</Typography>
 									</Stack>
 								</Stack>
 
@@ -183,7 +185,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 												})
 											) : (
 												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
+													<Image src="/img/icons/icoAlert.svg" alt="" width={56} height={56} unoptimized />
 													<p>No Article found!</p>
 												</Stack>
 											)}
@@ -203,7 +205,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 												})
 											) : (
 												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
+													<Image src="/img/icons/icoAlert.svg" alt="" width={56} height={56} unoptimized />
 													<p>No Article found!</p>
 												</Stack>
 											)}
@@ -223,7 +225,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 												})
 											) : (
 												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
+													<Image src="/img/icons/icoAlert.svg" alt="" width={56} height={56} unoptimized />
 													<p>No Article found!</p>
 												</Stack>
 											)}
@@ -243,7 +245,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 												})
 											) : (
 												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
+													<Image src="/img/icons/icoAlert.svg" alt="" width={56} height={56} unoptimized />
 													<p>No Article found!</p>
 												</Stack>
 											)}

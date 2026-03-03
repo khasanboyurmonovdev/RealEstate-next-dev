@@ -1,4 +1,6 @@
+// Phase 4 Task 8 — next/image migration
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Box, Button, Pagination, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
@@ -63,7 +65,7 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>NESTAR FOLLOWS MOBILE</div>;
+		return <div>IJARALY FOLLOWS MOBILE</div>;
 	} else {
 		return (
 			<div id="member-follows-page">
@@ -80,7 +82,7 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 					</Stack>
 					{memberFollowings?.length === 0 && (
 						<div className={'no-data'}>
-							<img src="/img/icons/icoAlert.svg" alt="" />
+							<Image src="/img/icons/icoAlert.svg" alt="" width={56} height={56} unoptimized />
 							<p>No Followings yet!</p>
 						</div>
 					)}
@@ -91,9 +93,16 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 						return (
 							<Stack className="follows-card-box" key={follower._id}>
 								<Stack className={'info'} onClick={() => redirectToMemberPageHandler(follower?.followingData?._id)}>
-									<Stack className="image-box">
-										<img src={imagePath} alt="" />
-									</Stack>
+								<Stack className="image-box">
+									<Image
+										src={imagePath}
+										alt=""
+										width={55}
+										height={55}
+										style={{ objectFit: 'cover', borderRadius: '50%' }}
+										unoptimized={imagePath.endsWith('.svg')}
+									/>
+								</Stack>
 									<Stack className="information-box">
 										<Typography className="name">{follower?.followingData?.memberNick}</Typography>
 									</Stack>

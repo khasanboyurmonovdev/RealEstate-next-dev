@@ -1,4 +1,6 @@
+// Phase 4 Task 8
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { NextPage } from 'next';
 import { Pagination, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
@@ -51,7 +53,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>NESTAR PROPERTIES MOBILE</div>;
+		return <div>IJARALY PROPERTIES MOBILE</div>;
 	} else {
 		return (
 			<div id="member-properties-page">
@@ -72,7 +74,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 						)}
 						{agentProperties?.length === 0 && (
 							<div className={'no-data'}>
-								<img src="/img/icons/icoAlert.svg" alt="" />
+								<Image src="/img/icons/icoAlert.svg" alt="" width={80} height={80} unoptimized />
 								<p>No Property Found!</p>
 							</div>
 						)}

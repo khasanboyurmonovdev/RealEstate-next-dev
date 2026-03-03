@@ -1,4 +1,6 @@
+// Phase 4 Task 8
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { NextPage } from 'next';
 import { Pagination, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
@@ -76,7 +78,7 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
 				<Stack className="articles-list-box">
 					{memberBoArticles?.length === 0 && (
 						<div className={'no-data'}>
-							<img src="/img/icons/icoAlert.svg" alt="" />
+							<Image src="/img/icons/icoAlert.svg" alt="" width={80} height={80} unoptimized />
 							<p>No Articles found!</p>
 						</div>
 					)}
