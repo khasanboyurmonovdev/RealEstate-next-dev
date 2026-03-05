@@ -187,6 +187,10 @@ export const GET_PROPERTIES = gql`
 					likeRefId
 					myFavorite
 				}
+				location {
+					type
+					coordinates
+				}
 			}
 			metaCounter {
 				total
@@ -348,6 +352,28 @@ export const GET_VISITED = gql`
 `;
 
 /**************************
+ *       BOOKINGS         *
+ *************************/
+
+export const GET_MY_BOOKINGS = gql`
+	query GetMyBookings($input: BookingsInquiry!) {
+		getMyBookings(input: $input) {
+			list {
+				_id
+				checkIn
+				checkOut
+				nights
+				totalPriceUZS
+				status
+				propertyId
+				createdAt
+			}
+			totalCount
+		}
+	}
+`;
+
+/**************************
  *      BOARD-ARTICLE     *
  *************************/
 
@@ -498,6 +524,7 @@ export const GET_COMMENTS = gql`
 /**************************
  *         FOLLOW        *
  *************************/
+
 export const GET_MEMBER_FOLLOWERS = gql`
 	query GetMemberFollowers($input: FollowInquiry!) {
 		getMemberFollowers(input: $input) {
@@ -650,4 +677,93 @@ export const UPDATE_NOTIFICATION = gql`
 			updatedAt
 		}
 	}
+`;
+
+/**************************
+ *        PAYMENT         *
+ *************************/
+
+export const GET_MY_PAYMENTS = gql`
+	query GetMyPayments {
+		getMyPayments {
+			_id
+			amountUZS
+			provider
+			status
+			orderId
+			purpose
+			completedAt
+			createdAt
+		}
+	}
+`;
+
+/**************************
+ *      SUBSCRIPTION      *
+ *************************/
+
+export const GET_MY_SUBSCRIPTION = gql`
+	query GetMySubscription {
+		getMySubscription {
+			plan
+			expiresAt
+			isActive
+			listingsUsed
+			listingsLimit
+			priceUZS
+		}
+	}
+`;
+
+/**************************
+ *           AI           *
+ *************************/
+
+export const AI_SEARCH = gql`
+	query AiSearch($query: String!) {
+		aiSearch(query: $query) {
+			districts
+			cities
+			listingType
+			propertyType
+			priceMin
+			priceMax
+			rooms
+			text
+		}
+	}
+`;
+
+/**************************
+ *       AI SUMMARY       *
+ *************************/
+
+export const GET_PROPERTY_AI_SUMMARY = gql`
+	query GetPropertyAiSummary($propertyId: String!) {
+		getPropertyAiSummary(propertyId: $propertyId) {
+			uz
+			ru
+		}
+	}
+`;
+/**************************
+ *    SIMILAR PROPERTIES  *
+ *************************/
+
+export const GET_SIMILAR_PROPERTIES = gql`
+  query GetSimilarProperties($propertyId: String!) {
+    getSimilarProperties(propertyId: $propertyId) {
+      _id
+      propertyTitle
+      propertyPrice
+      district
+      city
+      images
+      propertySquare
+      propertyStatus
+      verificationStatus
+      listingType
+      propertyType
+    }
+  }
 `;

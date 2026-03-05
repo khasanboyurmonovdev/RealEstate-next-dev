@@ -5,8 +5,9 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import PlaceIcon from '@mui/icons-material/Place';
+import { useLazyQuery } from '@apollo/client';
+import { AI_SEARCH } from '../../../apollo/user/query';
 import { PropertiesInquiry } from '../../types/property/property.input';
-import './hero.scss';
 
 const initialInput: PropertiesInquiry = {
 	page: 1,
@@ -23,6 +24,10 @@ const HeroHomepage = () => {
 	const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>(initialInput);
 	const [searchMode, setSearchMode] = useState<'rent' | 'sale'>('rent');
 	const [locationInput, setLocationInput] = useState('');
+	const [aiQuery, setAiQuery] = useState('');
+	const [aiLoading, setAiLoading] = useState(false);
+
+	const [runAiSearch] = useLazyQuery(AI_SEARCH, { fetchPolicy: 'network-only' });
 
 	const pushSearchHandler = useCallback(async () => {
 		try {
@@ -44,6 +49,30 @@ const HeroHomepage = () => {
 			console.error('pushSearchHandler', err);
 		}
 	}, [searchFilter, locationInput, searchMode, router]);
+
+	const handleAiSearch = async () => {
+		if (!aiQuery.trim()) return;
+		setAiLoading(true);
+		try {
+			const { data } = await runAiSearch({ variables: { query: aiQuery } });
+			const result = data?.aiSearch ?? {};
+			const params = new URLSearchParams();
+			if (result.districts?.length) params.set('districts', result.districts.join(','));
+			if (result.cities?.length) params.set('cities', result.cities.join(','));
+			if (result.listingType) params.set('listingType', result.listingType);
+			if (result.propertyType) params.set('propertyType', result.propertyType);
+			if (result.priceMin) params.set('priceMin', String(result.priceMin));
+			if (result.priceMax) params.set('priceMax', String(result.priceMax));
+			if (result.rooms?.length) params.set('rooms', result.rooms.join(','));
+			if (result.text) params.set('text', result.text);
+			router.push(`/property?${params.toString()}`);
+		} catch (err) {
+			console.error('AI search error', err);
+			router.push(`/property?text=${encodeURIComponent(aiQuery)}`);
+		} finally {
+			setAiLoading(false);
+		}
+	};
 
 	return (
 		<section className="hero-homepage">
@@ -94,6 +123,67 @@ const HeroHomepage = () => {
 								{t('Hero search button')}
 							</button>
 						</div>
+						<Box
+							sx={{
+								mt: 3,
+								display: 'flex',
+								gap: 1,
+								maxWidth: 600,
+								mx: 'auto',
+								px: 2,
+							}}
+						>
+							<Box
+								sx={{
+									flex: 1,
+									background: '#0a0f1e',
+									border: '1px solid #1246E630',
+									borderRadius: 2,
+									display: 'flex',
+									alignItems: 'center',
+									px: 2,
+									gap: 1,
+								}}
+							>
+								<span style={{ fontSize: '1rem' }}>🤖</span>
+								<input
+									value={aiQuery}
+									onChange={(e) => setAiQuery(e.target.value)}
+									onKeyDown={(e) => e.key === 'Enter' && handleAiSearch()}
+									placeholder="Masalan: Chilonzorda 2 xonali ijaraga uy"
+									style={{
+										flex: 1,
+										background: 'transparent',
+										border: 'none',
+										outline: 'none',
+										color: '#e2ddd6',
+										fontSize: '0.9rem',
+										padding: '0.75rem 0',
+										fontFamily: 'inherit',
+									}}
+								/>
+							</Box>
+							<Box
+								onClick={handleAiSearch}
+								sx={{
+									background: aiLoading ? '#0f1020' : '#1246E6',
+									color: '#fff',
+									fontWeight: 700,
+									fontSize: '0.85rem',
+									borderRadius: 2,
+									px: 2.5,
+									py: 1,
+									cursor: aiLoading ? 'not-allowed' : 'pointer',
+									display: 'flex',
+									alignItems: 'center',
+									whiteSpace: 'nowrap',
+									transition: 'opacity 0.15s',
+									'&:hover': { opacity: aiLoading ? 1 : 0.85 },
+								}}
+							>
+								{aiLoading ? 'Qidirilmoqda...' : 'AI Qidiruv'}
+							</Box>
+						</Box>
 						<div className="hero-stats">
 							<div className="hero-stat">
 								<span className="hero-stat-value">12,000+</span>

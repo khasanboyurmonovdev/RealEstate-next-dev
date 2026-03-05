@@ -15,6 +15,7 @@ import {
 	RadioGroup,
 	Stack,
 	TextField,
+	Typography,
 } from '@mui/material';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutFull from '../../libs/components/layout/LayoutFull';
@@ -56,7 +57,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import { CREATE_COMMENT, CREATE_REPORT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
-import { GET_COMMENTS, GET_PROPERTIES, GET_PROPERTY } from '../../apollo/user/query';
+import { GET_COMMENTS, GET_PROPERTIES, GET_PROPERTY, GET_PROPERTY_AI_SUMMARY } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { Direction, Message } from '../../libs/enums/common.enum';
 import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
@@ -93,6 +94,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	const [reportOpen, setReportOpen] = useState(false);
 	const [reportReason, setReportReason] = useState('');
 	const [reportDesc, setReportDesc] = useState('');
+	const [aiSummaryLang, setAiSummaryLang] = useState<'uz' | 'ru'>('uz');
+	const [aiSummaryVisible, setAiSummaryVisible] = useState(false);
 
 	const images = property?.propertyImages ?? (property as any)?.images ?? [];
 	const location = property?.propertyLocation ?? (property as any)?.district ?? '';
@@ -153,6 +156,14 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 			setCommentTotal(data.getComments?.metaCounter?.[0]?.total ?? 0);
 		},
 	});
+
+	const { data: aiSummaryData, loading: aiSummaryLoading } = useQuery(GET_PROPERTY_AI_SUMMARY, {
+		variables: { propertyId: propertyId ?? '' },
+		skip: !propertyId || !aiSummaryVisible,
+		fetchPolicy: 'cache-first',
+	});
+
+	const aiSummary = aiSummaryData?.getPropertyAiSummary;
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -547,6 +558,79 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 								</button>
 							</div>
 						</section>
+
+						<Box
+							sx={{
+								mt: 3,
+								mb: 3,
+								background: 'linear-gradient(135deg, #0a1628, #08091c)',
+								border: '1px solid #1246E630',
+								borderRadius: 3,
+								p: 3,
+							}}
+						>
+							<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5 }}>
+								<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+									<span style={{ fontSize: '1.1rem' }}>🤖</span>
+									<Typography sx={{ fontWeight: 700, fontSize: '0.95rem', color: '#e2ddd6' }}>
+										Asosiy ma&apos;lumot
+									</Typography>
+								</Box>
+								<Box sx={{ display: 'flex', gap: 0.5 }}>
+									{(['uz', 'ru'] as const).map((lang) => (
+										<Box
+											key={lang}
+											onClick={() => setAiSummaryLang(lang)}
+											sx={{
+												fontSize: '0.7rem',
+												fontWeight: 700,
+												px: 1.2,
+												py: 0.4,
+												borderRadius: 99,
+												cursor: 'pointer',
+												background: aiSummaryLang === lang ? '#1246E6' : '#0f1020',
+												color: aiSummaryLang === lang ? '#fff' : '#4b5563',
+												textTransform: 'uppercase',
+												transition: 'all 0.15s',
+											}}
+										>
+											{lang}
+										</Box>
+									))}
+								</Box>
+							</Box>
+
+							{!aiSummaryVisible ? (
+								<Box
+									onClick={() => setAiSummaryVisible(true)}
+									sx={{
+										display: 'flex',
+										alignItems: 'center',
+										gap: 1,
+										cursor: 'pointer',
+										color: '#1246E6',
+										fontSize: '0.85rem',
+										fontWeight: 600,
+										'&:hover': { opacity: 0.8 },
+									}}
+								>
+									<span>✨</span>
+									AI tahlilini ko&apos;rish
+								</Box>
+							) : aiSummaryLoading ? (
+								<Typography sx={{ fontSize: '0.85rem', color: '#4b5563' }}>
+									Tahlil tayyorlanmoqda...
+								</Typography>
+							) : aiSummary ? (
+								<Typography sx={{ fontSize: '0.88rem', color: '#9ca3af', lineHeight: 1.7 }}>
+									{aiSummaryLang === 'uz' ? aiSummary.uz : aiSummary.ru}
+								</Typography>
+							) : (
+								<Typography sx={{ fontSize: '0.85rem', color: '#4b5563' }}>
+									Ma&apos;lumot mavjud emas.
+								</Typography>
+							)}
+						</Box>
 
 						{/* Reviews */}
 						{commentTotal > 0 && (

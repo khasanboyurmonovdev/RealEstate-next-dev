@@ -40,6 +40,38 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
 	const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
+	useEffect(() => {
+		const q = router.query;
+		if (!Object.keys(q).length) return;
+
+		const aiFilters: any = {};
+
+		if (q.districts) aiFilters.locationList = String(q.districts).split(',');
+		if (q.listingType) aiFilters.listingTypeList = [String(q.listingType)];
+		if (q.propertyType) aiFilters.typeList = [String(q.propertyType)];
+		if (q.priceMin || q.priceMax) {
+			aiFilters.pricesRange = {
+				start: q.priceMin ? Number(q.priceMin) : 0,
+				end: q.priceMax ? Number(q.priceMax) : 9_999_999_999,
+			};
+		}
+		if (q.rooms) aiFilters.roomsList = String(q.rooms)
+			.split(',')
+			.map((v) => Number(v));
+		if (q.text) aiFilters.text = String(q.text);
+
+		if (Object.keys(aiFilters).length) {
+			setSearchFilter((prev: any) => ({
+				...prev,
+				page: 1,
+				search: {
+					...prev.search,
+					...aiFilters,
+				},
+			}));
+		}
+	}, [router.query]);
+
 	/** APOLLO REQUESTS **/
 	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
 

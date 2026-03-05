@@ -12,7 +12,7 @@ import { useTranslation } from 'next-i18next';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
 import { useIsMobile } from '../utils/deviceDetect';
-import './MobileBottomNav.scss';
+import styles from './MobileBottomNav.module.scss';
 
 const MobileBottomNav = () => {
 	const isMobile = useIsMobile();

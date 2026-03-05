@@ -17,7 +17,6 @@ import { REACT_APP_API_URL } from '../../config';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { useTranslation } from 'next-i18next';
-import './property-card.scss';
 
 export type PropertyCardVariant = 'default' | 'horizontal' | 'compact';
 
